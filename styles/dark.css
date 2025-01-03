@@ -1,0 +1,88 @@
+/* General layout style */
+.modern-layout {
+    -fx-padding: 20;
+    -fx-spacing: 15;
+    -fx-alignment: center;
+    -fx-background-color: linear-gradient(to bottom, #232526, #414345);
+}
+
+/* Label styling */
+.modern-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #e0e0e0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 4, 0.5, 0, 2);
+}
+
+/* Text field and password field styling */
+.modern-field {
+    -fx-padding: 10px;
+    -fx-font-size: 14px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #555;
+    -fx-border-width: 1px;
+    -fx-background-color: #333;
+    -fx-text-fill: #e0e0e0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 2, 0.3, 0, 1);
+}
+
+.modern-field:focused {
+    -fx-border-color: #00adb5;
+    -fx-border-width: 2px;
+}
+
+/* Button styling */
+.modern-button {
+    -fx-background-color: linear-gradient(to right, #00adb5, #393e46);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 4, 0.5, 0, 2);
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+.modern-button:hover {
+    -fx-background-color: linear-gradient(to right, #393e46, #00adb5);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 6, 0.5, 0, 3);
+}
+
+.modern-button:pressed {
+    -fx-background-color: linear-gradient(to right, #222831, #393e46);
+}
+
+/* Icon styling for buttons */
+.icon-small {
+    -fx-fit-width: 20px;
+    -fx-fit-height: 20px;
+    -fx-margin: 5px;
+}
+
+/* Image styling */
+.modern-image {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0.5, 0, 2);
+    -fx-padding: 10px;
+    -fx-background-radius: 15px;
+}
+
+/* Progress bar styling */
+.modern-progress-bar {
+    -fx-pref-width: 300px;
+    -fx-pref-height: 10px;
+    -fx-border-radius: 5px;
+    -fx-background-color: linear-gradient(to right, #00adb5, #393e46);
+}
+
+/* Dialog styling */
+.custom-dialog {
+    -fx-background-color: #222831;
+    -fx-border-color: #555;
+    -fx-border-width: 2px;
+    -fx-border-radius: 8px;
+    -fx-padding: 20px;
+    -fx-text-fill: #e0e0e0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.3, 0, 4);
+}

@@ -1,0 +1,433 @@
+/* General Styles */
+.root {
+    -fx-font-family: 'Segoe UI', sans-serif;
+    -fx-background-color: #f0f2f5;
+    /* Consistent background */
+}
+
+/* Header Styles */
+.header {
+    -fx-background-color: linear-gradient(to right, #004e92, #000428);
+    -fx-padding: 15;
+    -fx-spacing: 20;
+    -fx-alignment: center-left;
+    -fx-border-radius: 10;
+}
+
+.logo {
+    -fx-font-size: 25px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Times New Roman', 'Arial', sans-serif;
+    -fx-text-fill: linear-gradient(to top, #048eff, #3cccf6);  /* Gradient effect */
+    -fx-padding: 20px;
+    -fx-alignment: center;
+}
+
+.search-bar {
+    -fx-font-size: 16px;
+    -fx-text-fill: #1DA1F2;
+    -fx-background-color: white;
+    -fx-padding: 8 15;
+    -fx-border-radius: 20;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 2);
+    -fx-cursor: text;
+}
+
+/* Profile Icon */
+.profile-icon {
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+/* Navigation Panel */
+.nav-panel {
+    -fx-background-color: white;
+    -fx-padding: 20;
+    -fx-spacing: 15;
+    -fx-border-radius: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 2);
+    -fx-alignment: center-left;
+}
+
+.nav-item {
+    -fx-font-size: 14px;
+    -fx-text-fill: linear-gradient(to left, #3c6e72, #0046b7);
+    -fx-padding: 8 15;
+    -fx-border-width: 1;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-background-color: #E8F5FD;
+    -fx-cursor: hand;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 5, 0, 0, 1);
+    -fx-transition: 0.3s;
+}
+
+.nav-item:hover {
+    -fx-background-color: linear-gradient(to left, #3c6e72, #0046b7);
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0.5, 0, 2);
+
+}
+
+
+.nav-item:pressed {
+    -fx-background-color: linear-gradient(to right, #004e92, #000428);
+
+}
+/* Feed Container */
+.feed {
+    -fx-padding: 20;
+    -fx-background-color: #f8f9fa;
+    -fx-spacing: 25;
+}
+
+/* Post Styles */
+.post {
+    -fx-padding: 20;
+    -fx-background-color: white;
+    -fx-border-color: #E1E8ED;
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 2);
+    -fx-font-size: 16px;
+
+}
+
+.post:hover {
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+    -fx-border-color: #98ffec;
+}
+
+.post:pressed {
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+    -fx-border-color: #1DA1F2;
+}
+
+/* favorite Panel */
+.favorite {
+    -fx-background-color: white;
+    -fx-padding: 20;
+    -fx-spacing: 15;
+    -fx-border-radius: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 2);
+    -fx-alignment: baseline-center;
+}
+
+.favorite-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1DA1F2;
+}
+
+/* Trend Item */
+.favorite-user {
+    -fx-background-color: linear-gradient(to left, #3c6e72, #0046b7);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0.5, 0, 2);
+    -fx-cursor: hand;
+    -fx-margin: 30px 0 10px;
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+.favorite-user:hover {
+    -fx-underline: true;
+}
+
+/* Post Details Styling */
+.post-details {
+    -fx-background-color: transparent; /* Transparent background to blend with post-card */
+    -fx-alignment: top-center;
+    -fx-padding: 20;
+
+}
+
+.post-card {
+    -fx-padding: 20;
+    -fx-spacing: 20;
+    -fx-background-color: white;
+    -fx-border-color: #E1E8ED;
+    -fx-border-width: 1;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 4);
+    -fx-min-width: 1000px;
+    -fx-max-width: 1000px;
+    -fx-min-height: 400px;
+
+}
+
+/* User Information */
+.post-user-info {
+    -fx-alignment: center-left;
+    -fx-spacing: 10;
+}
+
+.post-full-name {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1DA1F2;
+    -fx-font-color: #14171a;
+}
+
+/* User Icon */
+.post-user-icon {
+    -fx-font-size: 36px;
+    -fx-text-fill: #1DA1F2; /* Consistent with Twitter blue */
+}
+
+/* Post Title */
+.post-details-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #14171A;
+}
+
+/* Post Author */
+.post-details-username {
+    -fx-font-size: 17px;
+    -fx-text-fill: #657786; /* Consistent subdued text color */
+}
+
+/* Post Content */
+.post-details-content {
+    -fx-font-size: 15px;
+    -fx-text-fill: #14171A;
+    -fx-line-spacing: 1.2;
+
+    -fx-background-color: transparent; /* Transparent background to blend with post-card */
+    -fx-alignment: top-center;
+    -fx-padding: 20;
+}
+
+/* Close Button */
+.post-details-close-button {
+    -fx-font-size: 14px;
+    -fx-text-fill: #1DA1F2;
+    -fx-padding: 8 15;
+    -fx-border-color: #1DA1F2;
+    -fx-border-width: 1;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-background-color: #E8F5FD;
+    -fx-cursor: hand;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 5, 0, 0, 1);
+    -fx-transition: 0.3s;
+}
+
+.post-details-close-button:hover {
+    -fx-background-color: #D6EDFD;
+    -fx-border-color: #1A91DA;
+}
+
+/* Action Buttons */
+.post-action-button {
+    -fx-font-size: 14px;
+    -fx-text-fill: linear-gradient(to left, #3c6e72, #0046b7);
+    -fx-padding: 8 15;
+    -fx-border-color: #1DA1F2;
+    -fx-border-width: 1;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-background-color: #E8F5FD;
+    -fx-cursor: hand;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 5, 0, 0, 1);
+    -fx-transition: 0.3s;
+}
+
+.post-action-button:hover {
+    -fx-background-color: #D6EDFD;
+    -fx-border-color: #1A91DA;
+}
+
+.post-action-button:pressed {
+    -fx-background-color: #A4D8FF;
+    -fx-border-color: #1A91DA;
+}
+
+
+/* Post Window */
+
+.post-window-details {
+    -fx-background-color: linear-gradient(to bottom, #e0eafc, #cfdef3);
+    -fx-alignment: top-center;
+    -fx-padding: 20;
+}
+
+.post-window-card {
+    -fx-padding: 20;
+    -fx-spacing: 20;
+    -fx-background-color: white;
+    -fx-border-color: #E1E8ED;
+    -fx-border-width: 1;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 4);
+    -fx-min-width: 900px;
+    -fx-max-width: 900px;
+    -fx-min-height: 200px;
+}
+
+
+.post-window-user-info {
+    -fx-alignment: center-left;
+    -fx-spacing: 10;
+}
+
+.post-window-full-name {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1DA1F2;
+    -fx-font-color: #14171a;
+}
+
+/* User Icon */
+.post-window-user-icon {
+    -fx-font-size: 60px;
+    -fx-text-fill: linear-gradient(to right, #0c25c7, #37c7cc); /* Consistent with Twitter blue */
+}
+
+/* Post Title */
+.post-window-details-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #007cff;
+}
+
+/* Post Author */
+.post-window-user-name {
+    -fx-font-size: 20px;
+    -fx-text-fill: #15354b;
+}
+
+.post-window-user-name:hover {
+    -fx-text-fill: #107d8d
+}
+
+/* Post Content */
+.post-window-details-content {
+    -fx-font-size: 25px;
+    -fx-text-fill: #14161a;
+    -fx-line-spacing: 1.2;
+
+    -fx-background-color: transparent;
+    -fx-alignment: top-center;
+    -fx-padding: 5;
+}
+
+/* Close Button */
+.post-window-close-button {
+    -fx-font-size: 15px;
+    -fx-min-width: 150px;
+    -fx-text-fill: #1DA1F2;
+    -fx-padding: 8px 15;
+    -fx-border-color: #1DA1F2;
+    -fx-border-width: 1;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-background-color: #E8F5FD;
+    -fx-cursor: hand;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 5, 0, 0, 1);
+    -fx-transition: 0.3s;
+
+}
+
+.post-window-close-button:hover {
+    -fx-background-color: #D6EDFD;
+    -fx-border-color: #1A91DA;
+}
+
+/* Styling for the comment area inside the post */
+.post-window-comment-area {
+    -fx-font-size: 15px;
+    -fx-min-width: 150px;
+    -fx-text-fill: #1DA1F2;
+    -fx-padding: 8px 15;
+    -fx-border-color: #1DA1F2;
+    -fx-border-width: 1;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-background-color: #E8F5FD;
+    -fx-cursor: hand;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 5, 0, 0, 1);
+    -fx-transition: 0.3s;
+}
+
+
+
+/* Styling for the post comment button */
+.post-window-post-button {
+    -fx-background-color: linear-gradient(to left, #3c6e72, #0046b7);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0.5, 0, 2);
+    -fx-cursor: hand;
+    -fx-margin: 30px 0 10px;
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+.post-window-post-button:hover {
+    -fx-background-color: linear-gradient(to right, #0c25c7, #37c7cc);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 6, 0.5, 0, 3);
+}
+
+/* Styling for the close button */
+.post-window-close-button {
+    -fx-margin-top: 15px;
+    -fx-background-color: #ff4c4c;
+    -fx-text-fill: white;
+    -fx-padding: 10px;
+    -fx-border: none;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.post-window-close-button:hover {
+    -fx-background-color: #e03e3e;
+}
+
+/* Styling for the floating comment section outside the post */
+.post-window-comments {
+    -fx-position: absolute;
+    -fx-top: 350px;
+    -fx-left: 50px;
+    -fx-pref-width: 90%;
+    -fx-max-height: 400px;
+    -fx-overflow-y: auto;
+    -fx-padding: 10px;
+    -fx-border-radius: 10px;
+}
+
+/* Styling for each floating comment */
+.post-window-floating-comment {
+    -fx-background-color: #f0f0f0;
+    -fx-padding: 8px;
+    -fx-border-radius: 5px;
+    -fx-margin-bottom: 5px;
+    -fx-max-width: 90%;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 2, 0, 0, 2);
+}
+
+/* Hover effect for floating comments */
+.post-window-floating-comment:hover {
+    -fx-background-color: #e1e1e1;
+}
+
+
