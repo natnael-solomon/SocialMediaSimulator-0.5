@@ -3,9 +3,11 @@ package socialmedia;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import static socialmedia.Main.userList;
+
 public class LoginPage extends Application {
 
-    private String currentUser;
+    private User currentUser;
 
     @Override
     public void start(Stage primaryStage) {
@@ -26,11 +28,17 @@ public class LoginPage extends Application {
         ui.createButton("Log In", "button", () -> {
             String username = ui.getTextFieldText(0);
             String password = ui.getPasswordFieldText(0);
-            if (username.isEmpty() || password.isEmpty()) {
-                ui.showCustomDialog("Error", "Username and password cannot be empty.");
+
+            if (userList.validateLogin(username, password)) {
+                currentUser = userList.findUserByUsername(username);
+
+                ui.resetFields();
+
+                HomePage homePage = new HomePage();
+                homePage.start(primaryStage);
+
             } else {
-                currentUser = username;
-                ui.showCustomDialog("Success", "Welcome, " + username + "!");
+                ui.showInvalidLoginFeedback("empty field");
             }
         });
 
@@ -58,7 +66,7 @@ public class LoginPage extends Application {
         ui.displayStage();
     }
 
-    public String getCurrentUser() {
+    public User getCurrentUser() {
         return currentUser;
     }
 }

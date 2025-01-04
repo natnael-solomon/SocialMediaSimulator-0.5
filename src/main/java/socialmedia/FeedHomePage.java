@@ -8,8 +8,10 @@ public class FeedHomePage extends ScrollPane {
 
     public FeedHomePage(Stage primaryStage) {
         VBox feed = createFeedPage(primaryStage);
+        this.getStyleClass().add("feed");
         this.setContent(feed);
         this.setFitToWidth(true);
+
     }
 
     private VBox createFeedPage(Stage primaryStage) {

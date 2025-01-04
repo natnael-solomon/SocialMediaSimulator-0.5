@@ -15,6 +15,7 @@ public class HomePage extends Application {
         root.setCenter(new FeedHomePage(primaryStage));
         root.setRight(new FavoriteHomePage());
 
+
         Scene scene = new Scene(root, 1200, 700);
         scene.getStylesheets().add("file:styles/default2.css");
         primaryStage.setTitle("Home Page");
