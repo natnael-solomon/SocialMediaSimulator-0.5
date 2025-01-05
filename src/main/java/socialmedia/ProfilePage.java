@@ -7,7 +7,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -18,17 +17,21 @@ public class ProfilePage extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        // Create root container with a modern background color
+        // Create root container
         BorderPane root = new BorderPane();
-        root.setStyle("-fx-background-color: #f8fafc;");
+        root.getStyleClass().add("layout");
 
-        // Header (Modern look with logo, search bar, and profile icon)
+        // Header (Modern look with logo)
         HBox header = createHeader();
         root.setTop(header);
 
-        // Profile Content (Profile picture, details, and posts feed)
-        HBox profileContent = createProfileContent();
+        // Profile Content (Profile picture, details)
+        VBox profileContent = createProfileContent();
         root.setCenter(profileContent);
+
+        // Sidebar for Posts Feed (Prepopulated)
+        VBox sidebar = createTweetFeed();
+        root.setRight(sidebar);
 
         // Footer (Logout button with hover effect)
         HBox footer = createFooter();
@@ -36,51 +39,36 @@ public class ProfilePage extends Application {
 
         // Set Scene and Stage
         Scene scene = new Scene(root, 1100, 750);
-        primaryStage.setTitle("Modern Twitter Profile Page");
+        scene.getStylesheets().add("file:styles/default.css");
+        primaryStage.setTitle("Profile Page");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
-    // Header with Logo, Search bar, and Profile icon
+    // Header with Logo
     private HBox createHeader() {
         HBox header = new HBox(25);
         header.setAlignment(Pos.CENTER_LEFT);
-        header.setStyle("-fx-background-color: #1DA1F2; -fx-padding: 20px;");
+        header.getStyleClass().add("header");
 
-        Text logo = new Text("TEST");
-        logo.setFont(Font.font("Segoe UI", 28));
+        Text logo = new Text("Profile");
+        logo.setFont(javafx.scene.text.Font.font("Segoe UI", 28));
         logo.setFill(Color.WHITE);
 
-        Button searchButton = createStyledButton("Search");
-        Button profileButton = createStyledButton("Profile");
-
-        header.getChildren().addAll(logo, searchButton, profileButton);
+        header.getChildren().add(logo);
         return header;
     }
 
-    private Button createStyledButton(String text) {
-        Button button = new Button(text);
-        button.setStyle("-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: #fff;");
-        button.setMinWidth(90);
-        button.setMinHeight(40);
-        button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: rgba(255, 255, 255, 0.1); -fx-border-radius: 20px;"));
-        button.setOnMouseExited(e -> button.setStyle("-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: #fff;"));
-        return button;
-    }
-
-    // Profile Content (Profile Info, Posts Feed)
-    private HBox createProfileContent() {
-        HBox profileContent = new HBox(40);
+    // Profile Content (Profile Info)
+    private VBox createProfileContent() {
+        VBox profileContent = new VBox(40);
         profileContent.setAlignment(Pos.TOP_CENTER);
-        profileContent.setStyle("-fx-padding: 30px;");
+        profileContent.getStyleClass().add("layout");
 
-        // Left side: Profile Info
+        // Profile Info
         VBox profileInfo = createProfileInfo();
 
-        // Right side: Tweets Feed (Prepopulated)
-        VBox tweetFeed = createTweetFeed();
-
-        profileContent.getChildren().addAll(profileInfo, tweetFeed);
+        profileContent.getChildren().addAll(profileInfo);
         return profileContent;
     }
 
@@ -88,28 +76,28 @@ public class ProfilePage extends Application {
     private VBox createProfileInfo() {
         VBox profileInfo = new VBox(25);
         profileInfo.setAlignment(Pos.CENTER);
-        profileInfo.setStyle("-fx-padding: 20px;");
+        profileInfo.getStyleClass().add("layout");
 
         // Profile Picture with round shape
         ImageView profileImageView = new ImageView();
-        profileImageView.setFitWidth(160);  // Ensure image fits within the circle's diameter
-        profileImageView.setFitHeight(160); // Maintain proper height proportional to width
-        profileImageView.setPreserveRatio(true); // Ensure the image scales proportionally
-        profileImageView.setStyle("-fx-background-radius: 80px; -fx-border-radius: 80px; -fx-border-width: 4; -fx-border-color: gray;");  // Make it round using setStyle()
+        profileImageView.setFitWidth(160);
+        profileImageView.setFitHeight(160);
+        profileImageView.setPreserveRatio(true);
+        profileImageView.getStyleClass().add("profile-picture");
 
         // Button to change profile picture
         Button changePictureButton = createStyledButton("Change Picture");
-        changePictureButton.setStyle("-fx-background-color: #1DA1F2; -fx-text-fill: white; -fx-border-radius: 20px;");
+        changePictureButton.getStyleClass().add("button-small");
         changePictureButton.setOnAction(e -> openFileChooser(profileImageView));
 
         // Username and Bio
         Text username = new Text("John Doe");
-        username.setFont(Font.font("Segoe UI", 24));
-        username.setStyle("-fx-font-weight: bold;");
+        username.setFont(javafx.scene.text.Font.font("Segoe UI", 24));
+        username.getStyleClass().add("label-first");
 
         Text bio = new Text("Software Developer | Coffee Lover | Always Learning.");
-        bio.setFont(Font.font("Segoe UI", 16));
-        bio.setFill(Color.GRAY);
+        bio.setFont(javafx.scene.text.Font.font("Segoe UI", 16));
+        bio.getStyleClass().add("bio-label");
 
         profileInfo.getChildren().addAll(profileImageView, changePictureButton, username, bio);
         return profileInfo;
@@ -131,10 +119,10 @@ public class ProfilePage extends Application {
     // Tweets Feed (Prepopulated Posts)
     private VBox createTweetFeed() {
         VBox tweetFeed = new VBox(30);
-        tweetFeed.setStyle("-fx-background-color: white; -fx-padding: 25px; -fx-border-radius: 10px; -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);");
+        tweetFeed.getStyleClass().add("post-container");
 
         // Prepopulated Tweets (Only showing user's posts)
-        VBox tweet1 = createTweet("John Doe", " #excited", "2m ago");
+        VBox tweet1 = createTweet("John Doe", "#excited", "2m ago");
         VBox tweet2 = createTweet("John Doe", "Just finished reading a great book! #booklover", "10m ago");
 
         tweetFeed.getChildren().addAll(tweet1, tweet2);
@@ -144,19 +132,19 @@ public class ProfilePage extends Application {
     // Method to create a single Tweet layout
     private VBox createTweet(String username, String content, String timestamp) {
         VBox tweet = new VBox(15);
-        tweet.setStyle("-fx-background-color: #f4f6f8; -fx-padding: 20px; -fx-border-radius: 15px;");
+        tweet.getStyleClass().add("post-container");
 
         Text userText = new Text(username);
-        userText.setFont(Font.font("Segoe UI", 16));
-        userText.setStyle("-fx-font-weight: bold;");
+        userText.setFont(javafx.scene.text.Font.font("Segoe UI", 16));
+        userText.getStyleClass().add("post-username");
 
         Text contentText = new Text(content);
-        contentText.setFont(Font.font("Segoe UI", 16));
-        contentText.setFill(Color.BLACK);
+        contentText.setFont(javafx.scene.text.Font.font("Segoe UI", 16));
+        contentText.getStyleClass().add("post-content");
 
         Text timeText = new Text(timestamp);
-        timeText.setFont(Font.font("Segoe UI", 14));
-        timeText.setFill(Color.GRAY);
+        timeText.setFont(javafx.scene.text.Font.font("Segoe UI", 14));
+        timeText.getStyleClass().add("post-timestamp");
 
         tweet.getChildren().addAll(userText, contentText, timeText);
         return tweet;
@@ -166,13 +154,19 @@ public class ProfilePage extends Application {
     private HBox createFooter() {
         HBox footer = new HBox(20);
         footer.setAlignment(Pos.CENTER);
-        footer.setStyle("-fx-background-color: #1DA1F2; -fx-padding: 20px;");
+        footer.getStyleClass().add("header");
 
         Button logoutButton = createStyledButton("Logout");
-        logoutButton.setStyle("-fx-background-color: white; -fx-text-fill: #1DA1F2; -fx-border-radius: 25px;");
+        logoutButton.getStyleClass().add("button");
 
         footer.getChildren().add(logoutButton);
         return footer;
+    }
+
+    private Button createStyledButton(String text) {
+        Button button = new Button(text);
+        button.getStyleClass().add("button");
+        return button;
     }
 
     public static void main(String[] args) {
