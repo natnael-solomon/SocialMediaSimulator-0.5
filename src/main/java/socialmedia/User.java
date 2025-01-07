@@ -12,7 +12,9 @@ public class User {
     private Image profilePicture;
     private String bio;
     private String password;
+    private final List<User> favoriteUsers;
     private final List<Post> posts;
+
 
     public User(String fullName, String username, String password) {
         this(fullName, username, password, null, null);
@@ -24,6 +26,7 @@ public class User {
         this.password = hashPassword(password);
         this.profilePicture = profilePicture;
         this.bio = bio;
+        this.favoriteUsers= new ArrayList<>();
         this.posts = new ArrayList<>();
     }
 
@@ -97,6 +100,14 @@ public class User {
 
     public void removePost(Post post) {
         posts.remove(post);
+    }
+
+    public List<User> getFavoriteUsers() {
+        return new ArrayList<>(favoriteUsers);
+    }
+
+    public void addToFavoriteUsers(User user) {
+        this.favoriteUsers.add(user);
     }
 
     //Simple in-house hash function

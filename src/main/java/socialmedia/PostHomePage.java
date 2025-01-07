@@ -22,6 +22,7 @@ public class PostHomePage extends VBox {
 
         this.getChildren().addAll(postHeader, postContent, postActions);
 
+
         this.setOnMouseClicked(event -> openPostInNewWindow(postId, userData[0], userData[1], postContent.getText(), primaryStage));
     }
 

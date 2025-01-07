@@ -230,4 +230,8 @@ public class UiComponent {
         addStyleClass(hBox, cssClass);
         return hBox;
     }
+
+    public Stage getStage() {
+        return stage;
+    }
 }

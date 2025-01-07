@@ -1,175 +1,145 @@
 package socialmedia;
 
-import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.image.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.io.File;
+import java.util.List;
 
-public class ProfilePage extends Application {
+public class ProfilePage {
 
-    @Override
-    public void start(Stage primaryStage) {
-        // Create root container
-        BorderPane root = new BorderPane();
-        root.getStyleClass().add("layout");
+    private final HBox rootLayout;
 
-        // Header (Modern look with logo)
-        HBox header = createHeader();
-        root.setTop(header);
+    public ProfilePage() {
+        rootLayout = new HBox();
+        rootLayout.setPadding(new Insets(20));
+        rootLayout.setSpacing(20);
+        rootLayout.setStyle("-fx-background-color: #f5f5f5;");
 
-        // Profile Content (Profile picture, details)
-        VBox profileContent = createProfileContent();
-        root.setCenter(profileContent);
+        // Add profile section on the left
+        VBox profileSection = createProfileSection();
+        profileSection.setPrefWidth(300); // Fixed width for the profile section
 
-        // Sidebar for Posts Feed (Prepopulated)
-        VBox sidebar = createTweetFeed();
-        root.setRight(sidebar);
+        // Add posts section on the right
+        ScrollPane postsSection = createPostsSection();
+        HBox.setHgrow(postsSection, Priority.ALWAYS); // Allow posts section to grow
 
-        // Footer (Logout button with hover effect)
-        HBox footer = createFooter();
-        root.setBottom(footer);
-
-        // Set Scene and Stage
-        Scene scene = new Scene(root, 1100, 750);
-        scene.getStylesheets().add("file:styles/default.css");
-        primaryStage.setTitle("Profile Page");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        rootLayout.getChildren().addAll(profileSection, postsSection);
     }
 
-    // Header with Logo
-    private HBox createHeader() {
-        HBox header = new HBox(25);
-        header.setAlignment(Pos.CENTER_LEFT);
-        header.getStyleClass().add("header");
-
-        Text logo = new Text("Profile");
-        logo.setFont(javafx.scene.text.Font.font("Segoe UI", 28));
-        logo.setFill(Color.WHITE);
-
-        header.getChildren().add(logo);
-        return header;
+    public Scene getScene() {
+        return new Scene(rootLayout, 1200, 700);
     }
 
-    // Profile Content (Profile Info)
-    private VBox createProfileContent() {
-        VBox profileContent = new VBox(40);
-        profileContent.setAlignment(Pos.TOP_CENTER);
-        profileContent.getStyleClass().add("layout");
+    private VBox createProfileSection() {
+        VBox profileSection = new VBox();
+        profileSection.setSpacing(15);
+        profileSection.setPadding(new Insets(10));
+        profileSection.setStyle("-fx-background-color: white; -fx-border-color: #ddd; -fx-border-radius: 10;");
+        profileSection.setAlignment(Pos.TOP_CENTER);
 
-        // Profile Info
-        VBox profileInfo = createProfileInfo();
+        // Profile picture
+        ImageView profilePicture = new ImageView(new Image("file:icons/icon512.png", 100, 100, true, true));
+        profilePicture.setStyle("-fx-border-color: #ddd; -fx-border-width: 2px; -fx-border-radius: 50px;");
+        profilePicture.setClip(new Circle(50, 50, 50)); // Circular clip for profile picture
 
-        profileContent.getChildren().addAll(profileInfo);
-        return profileContent;
+        // User info
+        Label username = new Label("Username");
+        username.setFont(Font.font("Arial", 20));
+        username.setTextFill(Color.BLACK);
+
+        Label bio = new Label("This is the user's bio. It can span multiple lines and includes brief details about the user.");
+        bio.setWrapText(true);
+        bio.setTextFill(Color.GRAY);
+        bio.setMaxWidth(250);
+
+        HBox stats = new HBox(20);
+        stats.setAlignment(Pos.CENTER);
+
+
+        ToggleButton favoriteToggle = new ToggleButton("Add to Favorites");
+        favoriteToggle.setStyle("-fx-font-size: 14px; -fx-padding: 10px; -fx-background-color: #f0f0f0;");
+        favoriteToggle.setSelected(false);  // Initial state (not favorited)
+
+        favoriteToggle.setOnAction(event -> {
+            if (favoriteToggle.isSelected()) {
+                favoriteToggle.setText("Remove from Favorites");
+                // Handle adding the user to favorites (e.g., update database or internal state)
+            } else {
+                favoriteToggle.setText("Add to Favorites");
+                // Handle removing the user from favorites
+            }
+        });
+
+        profileSection.getChildren().addAll(profilePicture, username, bio, stats, favoriteToggle);
+        return profileSection;
     }
 
-    // Profile Information (Profile Image, Name, Bio)
-    private VBox createProfileInfo() {
-        VBox profileInfo = new VBox(25);
-        profileInfo.setAlignment(Pos.CENTER);
-        profileInfo.getStyleClass().add("layout");
+    private ScrollPane createPostsSection() {
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setFitToWidth(true);
+        scrollPane.setStyle("-fx-background-color: transparent; -fx-padding: 10;");
 
-        // Profile Picture with round shape
-        ImageView profileImageView = new ImageView();
-        profileImageView.setFitWidth(160);
-        profileImageView.setFitHeight(160);
-        profileImageView.setPreserveRatio(true);
-        profileImageView.getStyleClass().add("profile-picture");
+        VBox postsContainer = new VBox();
+        postsContainer.setSpacing(15);
+        postsContainer.setPadding(new Insets(10));
+        postsContainer.setStyle("-fx-background-color: white; -fx-border-color: #ddd; -fx-border-radius: 10;");
 
-        // Button to change profile picture
-        Button changePictureButton = createStyledButton("Change Picture");
-        changePictureButton.getStyleClass().add("button-small");
-        changePictureButton.setOnAction(e -> openFileChooser(profileImageView));
 
-        // Username and Bio
-        Text username = new Text("John Doe");
-        username.setFont(javafx.scene.text.Font.font("Segoe UI", 24));
-        username.getStyleClass().add("label-first");
+        // Add sample posts
+        List<String> samplePosts = List.of(
+                "This is a sample post #1.",
+                "Enjoying a great day at the park!",
+                "Check out this amazing JavaFX UI design!",
+                "Here's a random thought for today...",
+                "Another post to showcase layout."
+        );
 
-        Text bio = new Text("Software Developer | Coffee Lover | Always Learning.");
-        bio.setFont(javafx.scene.text.Font.font("Segoe UI", 16));
-        bio.getStyleClass().add("bio-label");
-
-        profileInfo.getChildren().addAll(profileImageView, changePictureButton, username, bio);
-        return profileInfo;
-    }
-
-    // File chooser to update profile picture
-    private void openFileChooser(ImageView profileImageView) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
-
-        File selectedFile = fileChooser.showOpenDialog(profileImageView.getScene().getWindow());
-
-        if (selectedFile != null) {
-            Image image = new Image(selectedFile.toURI().toString());
-            profileImageView.setImage(image);
+        for (String post : samplePosts) {
+            postsContainer.getChildren().add(createPost(post));
         }
+
+        scrollPane.setContent(postsContainer);
+        return scrollPane;
     }
 
-    // Tweets Feed (Prepopulated Posts)
-    private VBox createTweetFeed() {
-        VBox tweetFeed = new VBox(30);
-        tweetFeed.getStyleClass().add("post-container");
+    private VBox createPost(String content) {
+        VBox postBox = new VBox();
+        postBox.setPadding(new Insets(10));
+        postBox.setSpacing(10);
+        postBox.setStyle("-fx-background-color: #ffffff; -fx-border-color: #ddd; -fx-border-radius: 8;");
 
-        // Prepopulated Tweets (Only showing user's posts)
-        VBox tweet1 = createTweet("John Doe", "#excited", "2m ago");
-        VBox tweet2 = createTweet("John Doe", "Just finished reading a great book! #booklover", "10m ago");
+        Label postContent = new Label(content);
+        postContent.setWrapText(true);
+        postContent.setFont(Font.font("Arial", 14));
+        postContent.setTextFill(Color.BLACK);
 
-        tweetFeed.getChildren().addAll(tweet1, tweet2);
-        return tweetFeed;
-    }
-
-    // Method to create a single Tweet layout
-    private VBox createTweet(String username, String content, String timestamp) {
-        VBox tweet = new VBox(15);
-        tweet.getStyleClass().add("post-container");
-
-        Text userText = new Text(username);
-        userText.setFont(javafx.scene.text.Font.font("Segoe UI", 16));
-        userText.getStyleClass().add("post-username");
-
-        Text contentText = new Text(content);
-        contentText.setFont(javafx.scene.text.Font.font("Segoe UI", 16));
-        contentText.getStyleClass().add("post-content");
-
-        Text timeText = new Text(timestamp);
-        timeText.setFont(javafx.scene.text.Font.font("Segoe UI", 14));
-        timeText.getStyleClass().add("post-timestamp");
-
-        tweet.getChildren().addAll(userText, contentText, timeText);
-        return tweet;
-    }
-
-    // Footer (Logout button with hover effect)
-    private HBox createFooter() {
-        HBox footer = new HBox(20);
-        footer.setAlignment(Pos.CENTER);
-        footer.getStyleClass().add("header");
-
-        Button logoutButton = createStyledButton("Logout");
-        logoutButton.getStyleClass().add("button");
-
-        footer.getChildren().add(logoutButton);
-        return footer;
-    }
-
-    private Button createStyledButton(String text) {
-        Button button = new Button(text);
-        button.getStyleClass().add("button");
-        return button;
+        postBox.getChildren().add(postContent);
+        return postBox;
     }
 
     public static void main(String[] args) {
-        launch(args);
+        // Launch the JavaFX application for testing the ProfilePage
+        javafx.application.Application.launch(ProfilePageApp.class);
+    }
+
+    public static class ProfilePageApp extends javafx.application.Application {
+        @Override
+        public void start(Stage primaryStage) {
+            ProfilePage profilePage = new ProfilePage();
+            primaryStage.setScene(profilePage.getScene());
+            primaryStage.setTitle("Profile Page");
+            primaryStage.show();
+        }
     }
 }

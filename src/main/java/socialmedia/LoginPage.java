@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 
 import static socialmedia.Main.userList;
 
+
 public class LoginPage extends Application {
 
     private User currentUser;

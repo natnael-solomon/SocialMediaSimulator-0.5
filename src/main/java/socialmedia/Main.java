@@ -5,7 +5,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    public static UserManager userList = new UserManager();
+    public static UserManager userList = DataGenerator.generateData();
 
     public static void main(String[] args) {
         launch(args);
