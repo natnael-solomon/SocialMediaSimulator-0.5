@@ -1,7 +1,6 @@
 package socialmedia;
 
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -9,11 +8,8 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
 import java.util.List;
 
 public class ProfilePage {
@@ -22,9 +18,7 @@ public class ProfilePage {
 
     public ProfilePage() {
         rootLayout = new HBox();
-        rootLayout.setPadding(new Insets(20));
-        rootLayout.setSpacing(20);
-        rootLayout.setStyle("-fx-background-color: #f5f5f5;");
+        rootLayout.getStyleClass().add("root-layout");
 
         // Add profile section on the left
         VBox profileSection = createProfileSection();
@@ -38,37 +32,29 @@ public class ProfilePage {
     }
 
     public Scene getScene() {
-        return new Scene(rootLayout, 1200, 700);
+        Scene scene = new Scene(rootLayout, 1200, 700);
+        scene.getStylesheets().add("file:styles/profile.css");
+        return scene;
     }
 
     private VBox createProfileSection() {
         VBox profileSection = new VBox();
-        profileSection.setSpacing(15);
-        profileSection.setPadding(new Insets(10));
-        profileSection.setStyle("-fx-background-color: white; -fx-border-color: #ddd; -fx-border-radius: 10;");
-        profileSection.setAlignment(Pos.TOP_CENTER);
+        profileSection.getStyleClass().add("profile-section");
 
         // Profile picture
         ImageView profilePicture = new ImageView(new Image("file:icons/icon512.png", 100, 100, true, true));
-        profilePicture.setStyle("-fx-border-color: #ddd; -fx-border-width: 2px; -fx-border-radius: 50px;");
+        profilePicture.getStyleClass().add("profile-picture");
         profilePicture.setClip(new Circle(50, 50, 50)); // Circular clip for profile picture
 
         // User info
         Label username = new Label("Username");
-        username.setFont(Font.font("Arial", 20));
-        username.setTextFill(Color.BLACK);
+        username.getStyleClass().add("username");
 
         Label bio = new Label("This is the user's bio. It can span multiple lines and includes brief details about the user.");
-        bio.setWrapText(true);
-        bio.setTextFill(Color.GRAY);
-        bio.setMaxWidth(250);
-
-        HBox stats = new HBox(20);
-        stats.setAlignment(Pos.CENTER);
-
+        bio.getStyleClass().add("bio");
 
         ToggleButton favoriteToggle = new ToggleButton("Add to Favorites");
-        favoriteToggle.setStyle("-fx-font-size: 14px; -fx-padding: 10px; -fx-background-color: #f0f0f0;");
+        favoriteToggle.getStyleClass().add("favorite-toggle");
         favoriteToggle.setSelected(false);  // Initial state (not favorited)
 
         favoriteToggle.setOnAction(event -> {
@@ -81,7 +67,7 @@ public class ProfilePage {
             }
         });
 
-        profileSection.getChildren().addAll(profilePicture, username, bio, stats, favoriteToggle);
+        profileSection.getChildren().addAll(profilePicture, username, bio, favoriteToggle);
         return profileSection;
     }
 
@@ -91,10 +77,7 @@ public class ProfilePage {
         scrollPane.setStyle("-fx-background-color: transparent; -fx-padding: 10;");
 
         VBox postsContainer = new VBox();
-        postsContainer.setSpacing(15);
-        postsContainer.setPadding(new Insets(10));
-        postsContainer.setStyle("-fx-background-color: white; -fx-border-color: #ddd; -fx-border-radius: 10;");
-
+        postsContainer.getStyleClass().add("posts-container");
 
         // Add sample posts
         List<String> samplePosts = List.of(
@@ -115,14 +98,10 @@ public class ProfilePage {
 
     private VBox createPost(String content) {
         VBox postBox = new VBox();
-        postBox.setPadding(new Insets(10));
-        postBox.setSpacing(10);
-        postBox.setStyle("-fx-background-color: #ffffff; -fx-border-color: #ddd; -fx-border-radius: 8;");
+        postBox.getStyleClass().add("post-box");
 
         Label postContent = new Label(content);
-        postContent.setWrapText(true);
-        postContent.setFont(Font.font("Arial", 14));
-        postContent.setTextFill(Color.BLACK);
+        postContent.getStyleClass().add("post-content");
 
         postBox.getChildren().add(postContent);
         return postBox;
