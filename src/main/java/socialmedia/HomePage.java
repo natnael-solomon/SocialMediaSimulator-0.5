@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 
 public class HomePage extends Application {
     private final BorderPane root = new BorderPane();
+    private Scene scene = new Scene(root, 1200, 700);
 
     @Override
     public void start(Stage primaryStage) {
@@ -16,12 +17,16 @@ public class HomePage extends Application {
         root.setRight(new FavoriteHomePage());
 
 
-        Scene scene = new Scene(root, 1200, 700);
         scene.getStylesheets().add("file:styles/default2.css");
         primaryStage.setTitle("Home Page");
         primaryStage.setScene(scene);
         primaryStage.show();
 
+    }
+
+    public void setScene(Scene scene){
+        this.scene=scene;
+        start(new Stage());
     }
 
     public static void main(String[] args) {

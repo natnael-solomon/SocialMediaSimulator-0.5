@@ -22,11 +22,12 @@ public class ProfilePage {
 
         // Add profile section on the left
         VBox profileSection = createProfileSection();
-        profileSection.setPrefWidth(300); // Fixed width for the profile section
+        profileSection.setPrefWidth(400); // Fixed width for the profile section
 
         // Add posts section on the right
         ScrollPane postsSection = createPostsSection();
         HBox.setHgrow(postsSection, Priority.ALWAYS); // Allow posts section to grow
+
 
         rootLayout.getChildren().addAll(profileSection, postsSection);
     }
@@ -38,29 +39,26 @@ public class ProfilePage {
     }
 
     private VBox createProfileSection() {
-        VBox profileSection = new VBox();
-        profileSection.getStyleClass().add("profile-section");
+        UiComponent uiComponent = new UiComponent(new Stage());
+        VBox profileSection = uiComponent.createVBox("profile-section", 15);
 
         // Profile picture
-        ImageView profilePicture = new ImageView(new Image("file:icons/icon512.png", 100, 100, true, true));
-        profilePicture.getStyleClass().add("profile-picture");
-        profilePicture.setClip(new Circle(50, 50, 50)); // Circular clip for profile picture
+        ImageView profilePicture = new ImageView(new Image("file:icons/profile.jpg", 200, 200,true, true));
+        profilePicture.setClip(new Circle(100, 100, 50)); // Circular clip for profile picture
 
         // User info
-        Label username = new Label("Username");
-        username.getStyleClass().add("username");
-
-        Label bio = new Label("This is the user's bio. It can span multiple lines and includes brief details about the user.");
-        bio.getStyleClass().add("bio");
+        Label username = uiComponent.createLabel("Username", "username", 0.0);
+        Label bio = uiComponent.createLabel("This is the user's bio. It can span multiple lines and includes brief details about the user.", "bio", 0.0);
+        bio.setWrapText(true);
 
         ToggleButton favoriteToggle = new ToggleButton("Add to Favorites");
-        favoriteToggle.getStyleClass().add("favorite-toggle");
-        favoriteToggle.setSelected(false);  // Initial state (not favorited)
+        uiComponent.addStyleClass(favoriteToggle, "favorite-toggle");
+        favoriteToggle.setSelected(false);  // Initial state (not favorite)
 
         favoriteToggle.setOnAction(event -> {
             if (favoriteToggle.isSelected()) {
                 favoriteToggle.setText("Remove from Favorites");
-                // Handle adding the user to favorites (e.g., update database or internal state)
+                // Handle adding the user to favorites
             } else {
                 favoriteToggle.setText("Add to Favorites");
                 // Handle removing the user from favorites
@@ -70,11 +68,12 @@ public class ProfilePage {
         profileSection.getChildren().addAll(profilePicture, username, bio, favoriteToggle);
         return profileSection;
     }
-
     private ScrollPane createPostsSection() {
         ScrollPane scrollPane = new ScrollPane();
+        scrollPane.getStyleClass().add("posts-section-scrollpane");
+        scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
-        scrollPane.setStyle("-fx-background-color: transparent; -fx-padding: 10;");
+
 
         VBox postsContainer = new VBox();
         postsContainer.getStyleClass().add("posts-container");
@@ -113,6 +112,7 @@ public class ProfilePage {
     }
 
     public static class ProfilePageApp extends javafx.application.Application {
+        Stage stage = new Stage();
         @Override
         public void start(Stage primaryStage) {
             ProfilePage profilePage = new ProfilePage();

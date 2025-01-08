@@ -1,14 +1,16 @@
 /* profile.css */
 
 .root-layout {
-    -fx-background-color: #f5f5f5;
+    -fx-background-color: linear-gradient(to bottom, #e0eafc, #cfdef3);
     -fx-padding: 20;
     -fx-spacing: 20;
+    -fx-alignment: center;
 }
 
 .profile-section {
     -fx-background-color: white;
-    -fx-border-color: #ddd;
+    -fx-border-color: linear-gradient(to left, #0c25c7, #3c6e72, #0046b7, #0046b7, #3c6e72);
+    -fx-border-width: 5;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
     -fx-padding: 10;
@@ -20,7 +22,6 @@
     -fx-border-color: #ddd;
     -fx-border-width: 2px;
     -fx-border-radius: 50px;
-
 }
 
 .username {
@@ -56,17 +57,17 @@
 
 .posts-container {
     -fx-background-color: white;
-    -fx-border-color: #ddd;
-    -fx-border-radius: 10;
+    -fx-border-width: 3;
+    -fx-border-color: white;
     -fx-padding: 10;
     -fx-spacing: 15;
-    -fx-background-radius: 10;
 }
 
 .post-box {
     -fx-background-color: #ffffff;
     -fx-border-color: #ddd;
-    -fx-border-radius: 8;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
     -fx-padding: 10;
     -fx-spacing: 10;
 }
@@ -76,4 +77,10 @@
     -fx-font-size: 14px;
     -fx-text-fill: black;
     -fx-wrap-text: true;
+}
+
+.posts-section-scrollpane {
+    -fx-background-color: linear-gradient(to bottom, #e0eafc, #cfdef3);
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
 }
