@@ -37,7 +37,6 @@ public class DataGenerator {
 
     /**
      * Populates the `UserManager` with dummy data and
-     *
      * returns the populated `UserManager` instance
      */
     public static UserManager generateData() {

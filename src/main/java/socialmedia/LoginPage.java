@@ -3,7 +3,7 @@ package socialmedia;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-import static socialmedia.Main.userList;
+import static socialmedia.Main.userManager;
 
 
 public class LoginPage extends Application {
@@ -30,8 +30,8 @@ public class LoginPage extends Application {
             String username = ui.getTextFieldText(0);
             String password = ui.getPasswordFieldText(0);
 
-            if (userList.validateLogin(username, password)) {
-                currentUser = userList.findUserByUsername(username);
+            if (userManager.validateLogin(username, password)) {
+                currentUser = userManager.findUserByUsername(username);
 
                 ui.resetFields();
 

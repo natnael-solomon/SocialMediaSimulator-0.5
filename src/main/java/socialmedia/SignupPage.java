@@ -45,11 +45,11 @@ public class SignupPage extends Application {
             ui.showInvalidLoginFeedback("empty field");
         } else if (!password.equals(confirmPassword)) {
             ui.showInvalidLoginFeedback("password");
-        }  else if (Main.userList.usernameExists(username)) {
+        }  else if (Main.userManager.usernameExists(username)) {
             ui.showInvalidLoginFeedback("username");
         } else {
             currentUser = new User(fullName, username, password);
-            Main.userList.addUser(currentUser);
+            Main.userManager.addUser(currentUser);
             ui.showCustomDialog("Success", "Account created successfully! Welcome, " + fullName + "!");
         }
     }
