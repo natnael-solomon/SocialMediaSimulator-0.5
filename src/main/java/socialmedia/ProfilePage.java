@@ -51,8 +51,7 @@ public class ProfilePage {
         Label bio = uiComponent.createLabel("This is the user's bio. It can span multiple lines and includes brief details about the user.", "bio", 0.0);
         bio.setWrapText(true);
 
-        ToggleButton favoriteToggle = new ToggleButton("Add to Favorites");
-        uiComponent.addStyleClass(favoriteToggle, "favorite-toggle");
+        ToggleButton favoriteToggle = uiComponent.createToggleButton("Add to Favorites","favorite-toggle");
         favoriteToggle.setSelected(false);  // Initial state (not favorite)
 
         favoriteToggle.setOnAction(event -> {

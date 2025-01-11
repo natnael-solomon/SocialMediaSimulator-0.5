@@ -7,9 +7,23 @@ import java.util.List;
 public class UserManager {
 
     private final List<User> users;
+    private User currentUser;
 
     public UserManager() {
         this.users = new ArrayList<>();
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
+    public User getCurrentUser(){
+        if(currentUser!=null){
+            return currentUser;
+        }
+        else {
+            return null;
+        }
     }
 
     public boolean addUser(User user) {

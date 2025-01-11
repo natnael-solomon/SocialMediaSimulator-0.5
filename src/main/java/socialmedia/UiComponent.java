@@ -133,6 +133,14 @@ public class UiComponent {
         return button;
     }
 
+    public ToggleButton createToggleButton(String initialText, String cssClass) {
+        ToggleButton toggleButton = new ToggleButton(initialText);
+
+        addStyleClass(toggleButton, cssClass);
+
+        return toggleButton;
+    }
+
     public ImageView createImage(String imagePath, String cssClass) {
         ImageView imageView = new ImageView(new Image(imagePath));
         addStyleClass(imageView, cssClass);

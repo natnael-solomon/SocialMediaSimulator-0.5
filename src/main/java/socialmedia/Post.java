@@ -10,6 +10,7 @@ public class Post implements Postable {
 
     private String content;
     private String author;
+    private int numberOfLikes;
     private final LocalDateTime timestamp;
     private final List<Comment> comments;
 
@@ -47,6 +48,14 @@ public class Post implements Postable {
 
     void addComment(Comment comment) {
         comments.add(comment);
+    }
+
+    int getNumberOfLikes(){
+        return numberOfLikes;
+    }
+
+    int getNumberOfComments(){
+        return comments.size();
     }
 
     @Override

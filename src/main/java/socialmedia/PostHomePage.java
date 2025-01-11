@@ -1,20 +1,19 @@
-
 package socialmedia;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 public class PostHomePage extends VBox {
 
-    public PostHomePage(String[] userData, int postId, Stage primaryStage) {
+    public PostHomePage(String[] userData, int postId, String content, Stage primaryStage) {
         this.setSpacing(10);
         this.getStyleClass().add("post");
 
         HBox postHeader = createPostHeader(userData);
-        Label postContent = new Label("The big, brown fox jumped over the lazy dog.");
+        Label postContent = new Label(content); // Set the content
         postContent.getStyleClass().add("post-content");
         postContent.setWrapText(true);
 
@@ -22,8 +21,7 @@ public class PostHomePage extends VBox {
 
         this.getChildren().addAll(postHeader, postContent, postActions);
 
-
-        this.setOnMouseClicked(event -> openPostInNewWindow(postId, userData[0], userData[1], postContent.getText(), primaryStage));
+        this.setOnMouseClicked(_ -> openPostInNewWindow(postId, userData[0], userData[1], content, primaryStage));
     }
 
     private HBox createPostHeader(String[] userData) {
@@ -50,11 +48,11 @@ public class PostHomePage extends VBox {
     private Button createActionButton(String text) {
         Button button = new Button(text);
         button.getStyleClass().add("post-action-button");
+        button.setOnAction(event -> System.out.println(text + " clicked!")); // Example action
         return button;
     }
 
     private void openPostInNewWindow(int postId, String fullName, String username, String content, Stage primaryStage) {
-        PostWindowHomePage postWindow = new PostWindowHomePage(postId, fullName, username, content, primaryStage);
-
+        new PostWindowHomePage(postId, fullName, username, content, primaryStage);
     }
 }

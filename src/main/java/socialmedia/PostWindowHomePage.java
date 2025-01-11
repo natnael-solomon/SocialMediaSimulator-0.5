@@ -19,6 +19,7 @@ public class PostWindowHomePage {
         ui.loadTheme("file:styles/default2.css");
 
         VBox postDetails = ui.createVBox("post-window-details", 20);
+
         ui.setLayout(postDetails);
 
         // Back button
@@ -84,6 +85,7 @@ public class PostWindowHomePage {
 
             VBox commentBox = ui.createVBox("post-window-background", 10);
             Label commentLabel = ui.createLabel("User: " + comment, "post-window-floating-comment", 0);
+            commentLabel.setWrapText(true);
 
             HBox replyInputSection = ui.createHBox("post-window-reply-section", 10);
 
@@ -103,6 +105,7 @@ public class PostWindowHomePage {
             VBox repliesBox = ui.createVBox("post-window-replies", 10);
             for (String reply : replies.get(i)) {
                 Label replyLabel = ui.createLabel("Reply: " + reply, "post-window-floating-comment-reply", 0);
+                replyLabel.setWrapText(true);
                 repliesBox.getChildren().add(replyLabel);
             }
 
