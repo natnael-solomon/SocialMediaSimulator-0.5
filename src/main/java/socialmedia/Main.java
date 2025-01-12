@@ -17,3 +17,4 @@ public class Main extends Application {
         LoginPage.start(stage);
     }
 }
+

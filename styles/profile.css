@@ -1,10 +1,16 @@
 /* Root layout */
 .root-layout {
-    -fx-background-color: #f9fafb;
-    -fx-padding: 20px;
+    -fx-background-color: linear-gradient(to bottom, #e0eafc, #cfdef3);
     -fx-spacing: 20px;
+    -fx-padding: 20px;
 }
 
+/* StackPane style */
+.stack-pane {
+    -fx-background-color: linear-gradient(to bottom, #f0f4f8, #d9e2ec);
+}
+
+/* Profile Section */
 .profile-section {
     -fx-alignment: top-center;
     -fx-background-color: #ffffff;
@@ -14,6 +20,7 @@
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
     -fx-spacing: 15px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);
 }
 
 .profile-section .profile-picture {
@@ -22,10 +29,17 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 8, 0, 0, 3);
 }
 
+.name {
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-text-fill: linear-gradient(to right, #031038, #0d3234);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0.5, 0, 2);
+}
+
 .username {
     -fx-font-size: 26px;
     -fx-font-weight: bold;
-    -fx-text-fill: #1e293b;
+    -fx-text-fill: linear-gradient(to left, #3c6e72, #0046b7);
 }
 
 .bio {
@@ -47,23 +61,34 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 5, 0, 0, 1);
     -fx-transition: 0.3s;
 }
+
 .favorite-toggle:selected {
     -fx-background-color: #D6EDFD;
     -fx-text-fill: #1A91DA;
 }
 
+/* Posts Section */
 .posts-section-scrollpane {
     -fx-background-color: transparent;
     -fx-padding: 0;
     -fx-border-width: 0;
 }
 
+.posts-section-scrollpane {
+    -fx-background-color: #ffffff;
+    -fx-padding: 20px;
+    -fx-border-color: #e1e5e9;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);
+}
+
 .posts-container {
     -fx-spacing: 15px;
     -fx-padding: 15px;
     -fx-background-color: #ffffff;
-    -fx-border-color: #e5e7eb;
-    -fx-border-width: 1px;
+    -fx-border-color: #ffffff;
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
 }

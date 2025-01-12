@@ -8,18 +8,28 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 
 public class ProfilePage {
 
-    private final HBox rootLayout;
+    private StackPane rootLayout;
     private final User user;
+    private ImageView profilePicture;
 
     public ProfilePage(User user) {
         this.user = user;
-        rootLayout = new HBox();
-        rootLayout.getStyleClass().add("root-layout");
+        initialize();
+    }
+
+    private void initialize() {
+        rootLayout = new StackPane();
+        rootLayout.getStyleClass().add("stack-pane");
+
+        HBox mainLayout = new HBox();
+        mainLayout.getStyleClass().add("root-layout");
 
         // Add profile section on the left
         VBox profileSection = createProfileSection();
@@ -29,7 +39,8 @@ public class ProfilePage {
         ScrollPane postsSection = createPostsSection();
         HBox.setHgrow(postsSection, Priority.ALWAYS);
 
-        rootLayout.getChildren().addAll(profileSection, postsSection);
+        mainLayout.getChildren().addAll(profileSection, postsSection);
+        rootLayout.getChildren().add(mainLayout);
     }
 
     public Scene getScene() {
@@ -42,19 +53,17 @@ public class ProfilePage {
         UiComponent uiComponent = new UiComponent(new Stage());
         VBox profileSection = uiComponent.createVBox("profile-section", 15);
 
-
-        ImageView profilePicture;
         if (user.getProfilePicture() != null) {
             profilePicture = new ImageView(user.getProfilePicture());
         } else {
-            profilePicture = new ImageView(new Image("file:icons/profile.jpg", 400, 400,true, true));
-
+            profilePicture = new ImageView(new Image("file:icons/profile.jpg", 400, 400, true, true));
         }
 
         profilePicture.setClip(new Circle(200, 200, 100)); // Circular clip for profile picture
-
+        profilePicture.setOnMouseClicked(event -> changeProfilePicture()); // Add click event to change profile picture
 
         // User info
+        Label name = uiComponent.createLabel(user.getFullName(), "name", 0.0); // Add name label
         Label username = uiComponent.createLabel(user.getUsername(), "username", 0.0);
         Label bio = uiComponent.createLabel(user.getBio() != null ? user.getBio() : "No bio available.", "bio", 0.0);
         bio.setWrapText(true);
@@ -74,7 +83,7 @@ public class ProfilePage {
             }
         });
 
-        profileSection.getChildren().addAll(profilePicture, username, bio, favoriteToggle);
+        profileSection.getChildren().addAll(profilePicture, name, username, bio, favoriteToggle); // Add name to the section
         return profileSection;
     }
 
@@ -114,4 +123,19 @@ public class ProfilePage {
         return postBox;
     }
 
+    private void changeProfilePicture() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
+        File selectedFile = fileChooser.showOpenDialog(profilePicture.getScene().getWindow());
+        if (selectedFile != null) {
+            Image newProfileImage = new Image(selectedFile.toURI().toString(), 400, 400, true, true);
+
+            profilePicture.setImage(newProfileImage);
+            profilePicture.setFitWidth(400); // Set the fit width
+            profilePicture.setFitHeight(400); // Set the fit height
+            profilePicture.setClip(new Circle(200, 200, 100)); // Circular clip for profile picture
+            profilePicture.setOnMouseClicked(event -> changeProfilePicture());
+            user.setProfilePicture(newProfileImage); // Ensure User class has this method
+        }
+    }
 }
