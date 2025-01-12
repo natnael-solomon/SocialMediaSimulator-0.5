@@ -3,16 +3,18 @@ package socialmedia;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class Reply implements Postable {
     private String content;
     private String author;
+    private User parentUser;
     private Comment parentComment;
     private final LocalDateTime timestamp;
 
-    public Reply(String content, String author, Comment parentComment) {
+    public Reply(String content, Comment parentComment, User parentUser) {
         this.content = content;
-        this.author = author;
+        this.author = parentUser.getUsername();
         this.parentComment = parentComment;
         this.timestamp = LocalDateTime.now();
     }
@@ -25,6 +27,13 @@ public class Reply implements Postable {
         this.parentComment = parentComment;
     }
 
+    public User getParentUser() {
+        return parentUser;
+    }
+
+    public void setParentUser(User parentUser) {
+        this.parentUser = parentUser;
+    }
 
     @Override
     public void setContent(String content) {

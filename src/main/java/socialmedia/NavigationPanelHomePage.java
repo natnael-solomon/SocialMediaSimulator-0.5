@@ -4,6 +4,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
+import static socialmedia.Main.userManager;
+
 public class NavigationPanelHomePage extends VBox {
 
     public NavigationPanelHomePage() {
@@ -14,7 +16,7 @@ public class NavigationPanelHomePage extends VBox {
         Button navItem = new Button("Profile");
         navItem.getStyleClass().add("nav-item");
         navItem.setOnAction(event -> {
-            ProfilePage profilePage = new ProfilePage();
+            ProfilePage profilePage = new ProfilePage(userManager.getCurrentUser());
             HomePage page = new HomePage();
             page.setScene(profilePage.getScene());
         });

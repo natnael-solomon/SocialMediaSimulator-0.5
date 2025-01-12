@@ -14,7 +14,7 @@ public class LoginPage extends Application {
     public void start(Stage primaryStage) {
         UiComponent ui = new UiComponent(primaryStage);
 
-        ui.configureStage("Slick Modern UI Demo");
+        ui.configureStage("Login Page");
         ui.loadTheme("file:styles/default.css");
 
         ui.setLayout( ui.createVBox("layout", 20));
@@ -32,6 +32,7 @@ public class LoginPage extends Application {
 
             if (userManager.validateLogin(username, password)) {
                 currentUser = userManager.findUserByUsername(username);
+                userManager.setCurrentUser(currentUser);
 
                 ui.resetFields();
 

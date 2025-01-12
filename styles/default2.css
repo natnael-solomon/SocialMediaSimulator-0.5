@@ -327,6 +327,7 @@
     -fx-font-size: 20px;
     -fx-text-fill: #14161a;
     -fx-line-spacing: 1.2;
+    -fx-padding: 0 5;
 
     -fx-background-color: transparent;
     -fx-alignment: top-center;
@@ -457,7 +458,7 @@
 
 .post-window-reply-textfield {
     -fx-min-width: 100px;
-    -fx-min-height: 20px;
+    -fx-min-height: 10px;
     -fx-font-size: 12px;
     -fx-text-fill: #1DA1F1;
     -fx-padding: 8px 15;

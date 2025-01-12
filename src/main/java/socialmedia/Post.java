@@ -11,15 +11,17 @@ public class Post implements Postable {
     private String content;
     private String author;
     private int numberOfLikes;
+    private User parentUser;
     private final LocalDateTime timestamp;
     private final List<Comment> comments;
 
     // Constructor
-    public Post(String content, String author) {
+    public Post(String content, User user) {
         this.content = content;
-        this.author = author;
+        this.author = user.getUsername();
         this.comments = new ArrayList<>();
-        this.timestamp = LocalDateTime.now(); //timestamp to the current time
+        this.timestamp = LocalDateTime.now();  //timestamp to the current time
+        this.parentUser = user;
     }
 
     @Override
@@ -47,7 +49,7 @@ public class Post implements Postable {
     }
 
     void addComment(Comment comment) {
-        comments.add(comment);
+        comments.addFirst(comment);
     }
 
     int getNumberOfLikes(){
@@ -57,6 +59,11 @@ public class Post implements Postable {
     int getNumberOfComments(){
         return comments.size();
     }
+
+    User getParentUser(){
+        return parentUser;
+    }
+
 
     @Override
     public String getContent() {

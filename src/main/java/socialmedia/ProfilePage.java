@@ -1,6 +1,5 @@
 package socialmedia;
 
-
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -10,24 +9,25 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-import java.util.List;
+
 
 public class ProfilePage {
 
     private final HBox rootLayout;
+    private final User user;
 
-    public ProfilePage() {
+    public ProfilePage(User user) {
+        this.user = user;
         rootLayout = new HBox();
         rootLayout.getStyleClass().add("root-layout");
 
         // Add profile section on the left
         VBox profileSection = createProfileSection();
-        profileSection.setPrefWidth(400); // Fixed width for the profile section
+        profileSection.setPrefWidth(400);
 
         // Add posts section on the right
         ScrollPane postsSection = createPostsSection();
-        HBox.setHgrow(postsSection, Priority.ALWAYS); // Allow posts section to grow
-
+        HBox.setHgrow(postsSection, Priority.ALWAYS);
 
         rootLayout.getChildren().addAll(profileSection, postsSection);
     }
@@ -42,52 +42,60 @@ public class ProfilePage {
         UiComponent uiComponent = new UiComponent(new Stage());
         VBox profileSection = uiComponent.createVBox("profile-section", 15);
 
-        // Profile picture
-        ImageView profilePicture = new ImageView(new Image("file:icons/profile.jpg", 200, 200,true, true));
-        profilePicture.setClip(new Circle(100, 100, 50)); // Circular clip for profile picture
+
+        ImageView profilePicture;
+        if (user.getProfilePicture() != null) {
+            profilePicture = new ImageView(user.getProfilePicture());
+        } else {
+            profilePicture = new ImageView(new Image("file:icons/profile.jpg", 400, 400,true, true));
+
+        }
+
+        profilePicture.setClip(new Circle(200, 200, 100)); // Circular clip for profile picture
+
 
         // User info
-        Label username = uiComponent.createLabel("Username", "username", 0.0);
-        Label bio = uiComponent.createLabel("This is the user's bio. It can span multiple lines and includes brief details about the user.", "bio", 0.0);
+        Label username = uiComponent.createLabel(user.getUsername(), "username", 0.0);
+        Label bio = uiComponent.createLabel(user.getBio() != null ? user.getBio() : "No bio available.", "bio", 0.0);
         bio.setWrapText(true);
 
-        ToggleButton favoriteToggle = uiComponent.createToggleButton("Add to Favorites","favorite-toggle");
-        favoriteToggle.setSelected(false);  // Initial state (not favorite)
+        ToggleButton favoriteToggle = uiComponent.createToggleButton("Add to Favorites", "favorite-toggle");
+        favoriteToggle.setSelected(user.getFavoriteUsers().contains(user)); // Check if the user is already a favorite
 
         favoriteToggle.setOnAction(event -> {
             if (favoriteToggle.isSelected()) {
                 favoriteToggle.setText("Remove from Favorites");
-                // Handle adding the user to favorites
+                // Add to favorites
+                // Handle adding this user to the current user's favorites
             } else {
                 favoriteToggle.setText("Add to Favorites");
-                // Handle removing the user from favorites
+                // Remove from favorites
+                // Handle removing this user from the current user's favorites
             }
         });
 
         profileSection.getChildren().addAll(profilePicture, username, bio, favoriteToggle);
         return profileSection;
     }
+
     private ScrollPane createPostsSection() {
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.getStyleClass().add("posts-section-scrollpane");
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
 
-
         VBox postsContainer = new VBox();
         postsContainer.getStyleClass().add("posts-container");
 
-        // Add sample posts
-        List<String> samplePosts = List.of(
-                "This is a sample post #1.",
-                "Enjoying a great day at the park!",
-                "Check out this amazing JavaFX UI design!",
-                "Here's a random thought for today...",
-                "Another post to showcase layout."
-        );
-
-        for (String post : samplePosts) {
-            postsContainer.getChildren().add(createPost(post));
+        // Add user's posts
+        if (user.getPosts().isEmpty()) {
+            Label noPostsLabel = new Label("This user has no posts.");
+            noPostsLabel.getStyleClass().add("no-posts-label");
+            postsContainer.getChildren().add(noPostsLabel);
+        } else {
+            for (Post post : user.getPosts()) {
+                postsContainer.getChildren().add(createPost(post.getContent()));
+            }
         }
 
         scrollPane.setContent(postsContainer);
@@ -99,25 +107,11 @@ public class ProfilePage {
         postBox.getStyleClass().add("post-box");
 
         Label postContent = new Label(content);
+        postContent.setWrapText(true);
         postContent.getStyleClass().add("post-content");
 
         postBox.getChildren().add(postContent);
         return postBox;
     }
 
-    public static void main(String[] args) {
-        // Launch the JavaFX application for testing the ProfilePage
-        javafx.application.Application.launch(ProfilePageApp.class);
-    }
-
-    public static class ProfilePageApp extends javafx.application.Application {
-        Stage stage = new Stage();
-        @Override
-        public void start(Stage primaryStage) {
-            ProfilePage profilePage = new ProfilePage();
-            primaryStage.setScene(profilePage.getScene());
-            primaryStage.setTitle("Profile Page");
-            primaryStage.show();
-        }
-    }
 }

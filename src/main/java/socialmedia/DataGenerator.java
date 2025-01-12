@@ -10,16 +10,21 @@ public class DataGenerator {
 
     // Dummy user data
     private static final String[][] userData = {
-            {"Natnael Solomon", "natnael"},
-            {"Nebiyu Samuel", "nebiyu"},
-            {"Leul Teferi", "chombe"},
-            {"Leul Zegeye", "scarlxrd_x"},
-            {"Lealem Addis", "nowayhome"},
+            {"Natnael Solomon", "@natnael"},
+            {"Nebiyu Samuel", "@nebiyu"},
+            {"Leul Teferi", "@chombe"},
+            {"Leul Zegeye", "@scarlxrd_x"},
+            {"Lealem Addis", "@nowayhome"},
     };
 
     private static final String[] postContents = {
-            "This is my first post!",
-            "Loving this new platform!"
+            "Stay positive, and don't forget to take a break every now and then. It’s okay to pause, reflect, and enjoy the present moment.",
+            "Just another day to chase dreams. It’s time to make something happen. ",
+            "Plans are great, but so is spontaneity \uD83C\uDFB2. Let’s see where the day takes me.",
+            "New goals, new challenges, new growth. Here’s to making today better than yesterday! \uD83D\uDE80",
+            "Loving this new platform! Big kudos to the devs \uD83D\uDC69\u200D\uD83D\uDCBB\uD83D\uDC68\u200D\uD83D\uDCBB",
+            "A quick reminder: You are doing great, even if it doesn’t always feel like it. \uD83D\uDCAA #KeepPushing",
+            "This is my first post! \uD83C\uDF05"
     };
 
     private static final String[] commentContents = {
@@ -75,7 +80,7 @@ public class DataGenerator {
 
     private static void generatePosts(User user) {
         for (String postContent : postContents) {
-            Post post = new Post(postContent, user.getUsername());
+            Post post = new Post(postContent, user);
 
             generateComments(post);
 
@@ -85,11 +90,10 @@ public class DataGenerator {
 
     private static void generateComments(Post post) {
         for (String commentContent : commentContents) {
-            Comment comment = new Comment(commentContent, "Commenter", post);
+            Comment comment = new Comment(commentContent, post, post.getParentUser());
 
 
             generateReplies(comment);
-
 
             post.addComment(comment);
         }
@@ -97,7 +101,7 @@ public class DataGenerator {
 
     private static void generateReplies(Comment comment) {
         for (String replyContent : replyContents) {
-            Reply reply = new Reply(replyContent, "Replier", comment);
+            Reply reply = new Reply(replyContent, comment, comment.getParentUser());
             comment.addReply(reply);
         }
     }

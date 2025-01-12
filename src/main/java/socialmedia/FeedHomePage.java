@@ -6,9 +6,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.List;
+
+import static socialmedia.Main.userManager;
+
 public class FeedHomePage extends ScrollPane {
     private final VBox feed;
     private final Stage primaryStage;
+
 
     public FeedHomePage(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -22,29 +27,28 @@ public class FeedHomePage extends ScrollPane {
         VBox feed = new VBox(25);
         feed.getStyleClass().add("feed");
 
-        String[][] userData = {
-                {"Natnael Solomon", "@natnael"},
-                {"Nebiyu Samuel", "@nebiyu"},
-                {"Leul Teferi", "@chombe"},
-                {"Leul Zegeye", "@scarlxrd_x"},
-                {"Lealem Addis", "@nowayhome"}
-        };
+        List<User> users = userManager.getUsers();
 
         CreatePostGUI createPostGUI = new CreatePostGUI(this);
         feed.getChildren().add(createPostGUI);
 
-        for (int i = 0; i < userData.length; i++) {
-            feed.getChildren().add(new PostHomePage(userData[i], i + 1, "Sample content for post " + (i + 1), primaryStage));
+
+        for (User user : users){
+            for(Post post : user.getPosts()){
+                String[] userData =  {user.getFullName(), user.getUsername()};
+                feed.getChildren().add(new PostHomePage(post, primaryStage));
+            }
         }
+
+
         return feed;
     }
 
-    public void addNewPost(String[] userData, String content) {
-        PostHomePage newPost = new PostHomePage(userData, feed.getChildren().size(), content, primaryStage);
-        feed.getChildren().add(1, newPost); // Add new post right after the CreatePostGUI
+    public void addNewPost(Post post) {
+        PostHomePage newPost = new PostHomePage(post, primaryStage);
+        feed.getChildren().add(1, newPost);
     }
 }
-
 
 class CreatePostGUI extends VBox {
     private final TextField postContent;
@@ -70,12 +74,12 @@ class CreatePostGUI extends VBox {
     private void createPost() {
         String content = postContent.getText().trim();
         if (!content.isEmpty()) {
-            String[] userData = {"New User", "@newuser"}; // Example user data
-            feedHomePage.addNewPost(userData, content);
+            Post post = new Post(content, userManager.getCurrentUser());
+            userManager.getCurrentUser().addPost(post);
+            feedHomePage.addNewPost(post);
             postContent.clear();
         } else {
             System.out.println("Post content cannot be empty");
         }
     }
 }
-

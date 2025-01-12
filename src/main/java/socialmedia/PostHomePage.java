@@ -8,12 +8,12 @@ import javafx.stage.Stage;
 
 public class PostHomePage extends VBox {
 
-    public PostHomePage(String[] userData, int postId, String content, Stage primaryStage) {
+    public PostHomePage(Post post, Stage primaryStage) {
         this.setSpacing(10);
         this.getStyleClass().add("post");
 
-        HBox postHeader = createPostHeader(userData);
-        Label postContent = new Label(content); // Set the content
+        HBox postHeader = createPostHeader(post);
+        Label postContent = new Label(post.getContent()); // Set the content
         postContent.getStyleClass().add("post-content");
         postContent.setWrapText(true);
 
@@ -21,15 +21,16 @@ public class PostHomePage extends VBox {
 
         this.getChildren().addAll(postHeader, postContent, postActions);
 
-        this.setOnMouseClicked(_ -> openPostInNewWindow(postId, userData[0], userData[1], content, primaryStage));
+        this.setOnMouseClicked(_ -> openPostInNewWindow(post, primaryStage));
     }
 
-    private HBox createPostHeader(String[] userData) {
+
+    private HBox createPostHeader(Post post) {
         HBox postHeader = new HBox(10);
         VBox userInfo = new VBox(5);
         userInfo.getChildren().addAll(
-                new Label(userData[0]){{getStyleClass().add("post-full-name");}},
-                new Label(userData[1]){{getStyleClass().add("post-username");}}
+                new Label(post.getParentUser().getFullName()){{getStyleClass().add("post-full-name");}},
+                new Label(post.getParentUser().getUsername()){{getStyleClass().add("post-username");}}
         );
         postHeader.getChildren().addAll(userInfo, new Label("2h ago"){{getStyleClass().add("post-timestamp");}});
         return postHeader;
@@ -52,7 +53,7 @@ public class PostHomePage extends VBox {
         return button;
     }
 
-    private void openPostInNewWindow(int postId, String fullName, String username, String content, Stage primaryStage) {
-        new PostWindowHomePage(postId, fullName, username, content, primaryStage);
+    private void openPostInNewWindow(Post post, Stage primaryStage) {
+        new PostPage(post, primaryStage);
     }
 }

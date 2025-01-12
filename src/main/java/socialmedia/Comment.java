@@ -10,17 +10,29 @@ public class Comment implements Postable {
     private String content;
     private String author;
     private Post parentPost;
+    private User parentUser;
 
     private final List<Reply> replies;
     private final LocalDateTime timestamp;
 
-    public Comment(String content, String author, Post parentPost) {
+    public Comment(String content, Post parentPost, User parentUser) {
         this.content = content;
-        this.author = author;
+        this.author = parentUser.getUsername();
         this.timestamp = LocalDateTime.now();
         this.parentPost = parentPost;
+        this.parentUser= parentUser;
         this.replies = new ArrayList<>();
+        this.parentPost.addComment(this);
     }
+
+    public User getParentUser() {
+        return parentUser;
+    }
+
+    public void setParentUser(User parentUser) {
+        this.parentUser = parentUser;
+    }
+
 
     @Override
     public void setContent(String content) {
