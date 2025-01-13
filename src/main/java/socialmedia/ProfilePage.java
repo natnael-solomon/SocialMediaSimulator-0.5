@@ -13,11 +13,14 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
+import static socialmedia.Main.userManager;
+
 public class ProfilePage {
 
     private StackPane rootLayout;
     private final User user;
     private ImageView profilePicture;
+    private VBox profileSection;
 
     public ProfilePage(User user) {
         this.user = user;
@@ -31,9 +34,8 @@ public class ProfilePage {
         HBox mainLayout = new HBox();
         mainLayout.getStyleClass().add("root-layout");
 
-        // Add profile section on the left
-        VBox profileSection = createProfileSection();
-        profileSection.setPrefWidth(400);
+        profileSection = createProfileSection();
+        profileSection.setPrefWidth(700);
 
         // Add posts section on the right
         ScrollPane postsSection = createPostsSection();
@@ -59,15 +61,28 @@ public class ProfilePage {
             profilePicture = new ImageView(new Image("file:icons/profile.jpg", 400, 400, true, true));
         }
 
-        profilePicture.setClip(new Circle(200, 200, 100)); // Circular clip for profile picture
-        profilePicture.setOnMouseClicked(event -> changeProfilePicture()); // Add click event to change profile picture
+      profilePicture = new ImageView(user.getProfilePicture() != null ? user.getProfilePicture()
+                : new Image("file:icons/profile.jpg", 200, 200, true, true));
+        profilePicture.setFitWidth(200);
+        profilePicture.setFitHeight(200);
+        profilePicture.setClip(new Circle(100, 100, 100));
+        profilePicture.setOnMouseClicked(event -> changeProfilePicture());
 
+        
         // User info
         Label name = uiComponent.createLabel(user.getFullName(), "name", 0.0); // Add name label
         Label username = uiComponent.createLabel(user.getUsername(), "username", 0.0);
         Label bio = uiComponent.createLabel(user.getBio() != null ? user.getBio() : "No bio available.", "bio", 0.0);
         bio.setWrapText(true);
 
+        
+        if (userManager.getCurrentUser().getUsername().equals(user.getUsername())) {
+            // Adds edit button
+            ToggleButton editButton = uiComponent.createToggleButton("Edit Profile", "edit-button");
+            editButton.setOnAction(event -> { openEditProfilePage(); });
+
+            profileSection.getChildren().addAll(profilePicture, name, username, bio, editButton);
+        } else {
         ToggleButton favoriteToggle = uiComponent.createToggleButton("Add to Favorites", "favorite-toggle");
         favoriteToggle.setSelected(user.getFavoriteUsers().contains(user)); // Check if the user is already a favorite
 
@@ -83,7 +98,8 @@ public class ProfilePage {
             }
         });
 
-        profileSection.getChildren().addAll(profilePicture, name, username, bio, favoriteToggle); // Add name to the section
+        profileSection.getChildren().addAll(profilePicture, name, username, bio, favoriteToggle); 
+    }
         return profileSection;
     }
 
@@ -137,5 +153,18 @@ public class ProfilePage {
             profilePicture.setOnMouseClicked(event -> changeProfilePicture());
             user.setProfilePicture(newProfileImage); // Ensure User class has this method
         }
+    }
+
+    private void updateProfileSection() {
+        profileSection.getChildren().clear();
+        profileSection.getChildren().add(createProfileSection());
+    }
+
+    private void openEditProfilePage() {
+        EditProfilePage editProfilePage = new EditProfilePage(user);
+        Stage stage = new Stage();
+        stage.setScene(editProfilePage.getScene());
+        stage.setOnHidden(event -> updateProfileSection()); // Update profile section when edit window is closed
+        stage.show();
     }
 }

@@ -26,12 +26,18 @@ public class PostHomePage extends VBox {
 
 
     private HBox createPostHeader(Post post) {
+
         HBox postHeader = new HBox(10);
         VBox userInfo = new VBox(5);
-        userInfo.getChildren().addAll(
-                new Label(post.getParentUser().getFullName()){{getStyleClass().add("post-full-name");}},
-                new Label(post.getParentUser().getUsername()){{getStyleClass().add("post-username");}}
-        );
+
+        Label username = new Label(post.getParentUser().getUsername());
+        username.getStyleClass().add("post-username");
+
+        Label fullNameLabel = new Label(post.getParentUser().getFullName());
+        fullNameLabel.getStyleClass().add("post-full-name");
+
+        userInfo.getChildren().addAll(fullNameLabel, username);
+
         postHeader.getChildren().addAll(userInfo, new Label("2h ago"){{getStyleClass().add("post-timestamp");}});
         return postHeader;
     }
