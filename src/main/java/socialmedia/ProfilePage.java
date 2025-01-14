@@ -1,6 +1,7 @@
 package socialmedia;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleButton;
@@ -20,10 +21,11 @@ public class ProfilePage {
     private StackPane rootLayout;
     private final User user;
     private ImageView profilePicture;
-    private VBox profileSection;
+    private final Stage primaryStage;
 
-    public ProfilePage(User user) {
+    public ProfilePage(User user, Stage primaryStage) {
         this.user = user;
+        this.primaryStage = primaryStage;
         initialize();
     }
 
@@ -34,7 +36,7 @@ public class ProfilePage {
         HBox mainLayout = new HBox();
         mainLayout.getStyleClass().add("root-layout");
 
-        profileSection = createProfileSection();
+        VBox profileSection = createProfileSection();
         profileSection.setPrefWidth(700);
 
         // Add posts section on the right
@@ -61,45 +63,45 @@ public class ProfilePage {
             profilePicture = new ImageView(new Image("file:icons/profile.jpg", 400, 400, true, true));
         }
 
-      profilePicture = new ImageView(user.getProfilePicture() != null ? user.getProfilePicture()
-                : new Image("file:icons/profile.jpg", 200, 200, true, true));
+        profilePicture = new ImageView(user.getProfilePicture() != null ? user.getProfilePicture() : new Image("file:icons/profile.jpg", 200, 200, true, true));
         profilePicture.setFitWidth(200);
         profilePicture.setFitHeight(200);
         profilePicture.setClip(new Circle(100, 100, 100));
-        profilePicture.setOnMouseClicked(event -> changeProfilePicture());
 
-        
         // User info
         Label name = uiComponent.createLabel(user.getFullName(), "name", 0.0); // Add name label
         Label username = uiComponent.createLabel(user.getUsername(), "username", 0.0);
         Label bio = uiComponent.createLabel(user.getBio() != null ? user.getBio() : "No bio available.", "bio", 0.0);
         bio.setWrapText(true);
 
-        
+        Button backButton = new Button("Back to Home");
+        backButton.setOnAction(event -> navigateBackToHome());
+
         if (userManager.getCurrentUser().getUsername().equals(user.getUsername())) {
             // Adds edit button
             ToggleButton editButton = uiComponent.createToggleButton("Edit Profile", "edit-button");
-            editButton.setOnAction(event -> { openEditProfilePage(); });
+            editButton.setOnAction(event -> openEditProfilePage());
 
-            profileSection.getChildren().addAll(profilePicture, name, username, bio, editButton);
+            profilePicture.setOnMouseClicked(event -> changeProfilePicture());
+            profileSection.getChildren().addAll(backButton, profilePicture, name, username, bio, editButton);
         } else {
-        ToggleButton favoriteToggle = uiComponent.createToggleButton("Add to Favorites", "favorite-toggle");
-        favoriteToggle.setSelected(user.getFavoriteUsers().contains(user)); // Check if the user is already a favorite
+            ToggleButton favoriteToggle = uiComponent.createToggleButton("Add to Favorites", "favorite-toggle");
+            favoriteToggle.setSelected(user.getFavoriteUsers().contains(user)); // Check if the user is already a favorite
 
-        favoriteToggle.setOnAction(event -> {
-            if (favoriteToggle.isSelected()) {
-                favoriteToggle.setText("Remove from Favorites");
-                // Add to favorites
-                // Handle adding this user to the current user's favorites
-            } else {
-                favoriteToggle.setText("Add to Favorites");
-                // Remove from favorites
-                // Handle removing this user from the current user's favorites
-            }
-        });
+            favoriteToggle.setOnAction(event -> {
+                if (favoriteToggle.isSelected()) {
+                    favoriteToggle.setText("Remove from Favorites");
+                    // Add to favorites
+                    // Handle adding this user to the current user's favorites
+                } else {
+                    favoriteToggle.setText("Add to Favorites");
+                    // Remove from favorites
+                    // Handle removing this user from the current user's favorites
+                }
+            });
 
-        profileSection.getChildren().addAll(profilePicture, name, username, bio, favoriteToggle); 
-    }
+            profileSection.getChildren().addAll(backButton, profilePicture, name, username, bio, favoriteToggle);
+        }
         return profileSection;
     }
 
@@ -147,24 +149,20 @@ public class ProfilePage {
             Image newProfileImage = new Image(selectedFile.toURI().toString(), 400, 400, true, true);
 
             profilePicture.setImage(newProfileImage);
-            profilePicture.setFitWidth(400); // Set the fit width
-            profilePicture.setFitHeight(400); // Set the fit height
-            profilePicture.setClip(new Circle(200, 200, 100)); // Circular clip for profile picture
-            profilePicture.setOnMouseClicked(event -> changeProfilePicture());
-            user.setProfilePicture(newProfileImage); // Ensure User class has this method
+            profilePicture.setFitWidth(200);
+            profilePicture.setFitHeight(200);
+            profilePicture.setClip(new Circle(100, 100, 100));
+            user.setProfilePicture(newProfileImage);
         }
-    }
-
-    private void updateProfileSection() {
-        profileSection.getChildren().clear();
-        profileSection.getChildren().add(createProfileSection());
     }
 
     private void openEditProfilePage() {
         EditProfilePage editProfilePage = new EditProfilePage(user);
-        Stage stage = new Stage();
-        stage.setScene(editProfilePage.getScene());
-        stage.setOnHidden(event -> updateProfileSection()); // Update profile section when edit window is closed
-        stage.show();
+        primaryStage.setScene(editProfilePage.getScene());
+    }
+
+    private void navigateBackToHome() {
+        HomePage homePage = new HomePage();
+        homePage.start(primaryStage);
     }
 }

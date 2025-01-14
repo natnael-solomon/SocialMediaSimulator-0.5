@@ -134,3 +134,58 @@
     -fx-alignment: center;
     -fx-padding: 20px;
 }
+
+/* Edit Profile Page */
+.edit-profile-page {
+    -fx-alignment: top-center;
+    -fx-background-color: #ffffff;
+    -fx-padding: 20px;
+    -fx-border-color: #e1e5e9;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-spacing: 15px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);
+    -fx-max-width: 600px;
+    -fx-max-height: 700px;
+}
+
+.edit-profile-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.edit-profile-picture {
+    -fx-border-radius: 50%;
+    -fx-background-radius: 50%;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 8, 0, 0, 3);
+}
+
+.edit-profile-button {
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+    -fx-background-color: #E8F5FD;
+    -fx-border-color: #1DA1F2;
+    -fx-border-width: 1;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-text-fill: #1DA1F2;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 5, 0, 0, 1);
+    -fx-transition: 0.3s;
+}
+
+.edit-profile-button:hover {
+    -fx-background-color: #D6EDFD;
+    -fx-text-fill: #1A91DA;
+}
+
+.edit-profile-field {
+    -fx-max-width: 400px;
+    -fx-font-size: 15px;
+    -fx-padding: 10px;
+    -fx-border-color: #e1e5e9;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}

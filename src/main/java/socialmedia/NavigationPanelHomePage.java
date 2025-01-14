@@ -3,24 +3,22 @@ package socialmedia;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import static socialmedia.Main.userManager;
 
 public class NavigationPanelHomePage extends VBox {
 
-    public NavigationPanelHomePage() {
+    public NavigationPanelHomePage(Stage primaryStage) {
         this.setSpacing(15);
         this.getStyleClass().add("nav-panel");
-
 
         Button navItem = new Button("Profile");
         navItem.getStyleClass().add("nav-item");
         navItem.setOnAction(event -> {
-            ProfilePage profilePage = new ProfilePage(userManager.getCurrentUser());
-            HomePage page = new HomePage();
-            page.setScene(profilePage.getScene());
+            ProfilePage profilePage = new ProfilePage(userManager.getCurrentUser(), primaryStage);
+            primaryStage.setScene(profilePage.getScene());
         });
-
 
         String[] navItems = {"Home", "Explore", "Notifications", "Messages"};
         for (String item : navItems) {

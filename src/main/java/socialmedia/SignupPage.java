@@ -53,8 +53,4 @@ public class SignupPage extends Application {
             ui.showCustomDialog("Success", "Account created successfully! Welcome, " + fullName + "!");
         }
     }
-
-    public User getCurrentUser() {
-        return currentUser;
-    }
 }

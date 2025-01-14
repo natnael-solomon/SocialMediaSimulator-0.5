@@ -12,9 +12,11 @@ public class PostPage {
     private final List<Comment> comments = new ArrayList<>();
     private final VBox floatingCommentSection = new VBox();
     private final Post post;
+    private final Stage primaryStage;
 
     public PostPage(Post post, Stage primaryStage) {
         this.post = post;
+        this.primaryStage = primaryStage;
 
         UiComponent ui = new UiComponent(primaryStage);
         ui.configureStage("Post Details - Post ");
@@ -60,7 +62,7 @@ public class PostPage {
         Label fullNameLabel = ui.createLabel(fullName, "post-window-full-name", 0);
         Label userName = ui.createLabel(username, "post-window-user-name", 0);
         userName.setOnMouseClicked(event -> {
-            ProfilePage profilePage = new ProfilePage(post.getParentUser());
+            ProfilePage profilePage = new ProfilePage(post.getParentUser(), primaryStage);
             Stage stage = new Stage();
             stage.setScene(profilePage.getScene());
             stage.show();
