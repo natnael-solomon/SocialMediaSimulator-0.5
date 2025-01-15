@@ -11,10 +11,18 @@ public class DataGenerator {
     // Dummy user data
     private static final String[][] userData = {
             {"Natnael Solomon", "natnael"},
-            {"Nebiyu Samuel", "nebiyu"},
             {"Leul Teferi", "chombe"},
             {"Leul Zegeye", "scarlxrd_x"},
             {"Lealem Addis", "nowayhome"},
+            {"Abel Getachew", "sociopath"},
+            {"Abenezer Daniel", "Abenixo"},
+            {"Zerubabel Takele", "zeritu"},
+            {"Nikodimos Hunegn", "nikolas"},
+            {"Nebiyu Hailemariam", "arsenal"},
+            {"Yosef Tadesse", "yosef"},
+            {"Yohannes Afework", "yoniman"},
+            {"Yared Feleke", "yarednegu"},
+            {"Nebiyu Samuel", "nebiyu"},
     };
 
     private static final String[] postContents = {
@@ -65,14 +73,12 @@ public class DataGenerator {
 
 
         for (User user : users) {
+                for (User potentialFavorite : users) {
 
-            for (User potentialFavorite : users) {
-                // Skip adding the user to their own favorites and prevent duplicates
-                if (!user.getUsername().equals(potentialFavorite.getUsername()) && user.getFavoriteUsers().size() < 4) {
-                    user.addToFavoriteUsers(potentialFavorite);
+                    if (!user.getUsername().equals(potentialFavorite.getUsername())) {
+                        user.addToFavoriteUsers(potentialFavorite);
+                    }
                 }
-
-            }
             userManager.addUser(user);
         }
 
@@ -91,7 +97,6 @@ public class DataGenerator {
     private static void generateComments(Post post) {
         for (String commentContent : commentContents) {
             Comment comment = new Comment(commentContent, post, post.getParentUser());
-
 
             generateReplies(comment);
 

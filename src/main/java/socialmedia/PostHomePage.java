@@ -30,7 +30,7 @@ public class PostHomePage extends VBox {
         HBox postHeader = new HBox(10);
         VBox userInfo = new VBox(5);
 
-        Label username = new Label(post.getParentUser().getUsername());
+        Label username = new Label("@"+ post.getParentUser().getUsername());
         username.getStyleClass().add("post-username");
 
         Label fullNameLabel = new Label(post.getParentUser().getFullName());

@@ -4,12 +4,10 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.List;
+import static socialmedia.Main.userManager;
 
 public class PostPage {
 
-    private final List<Comment> comments = new ArrayList<>();
     private final VBox floatingCommentSection = new VBox();
     private final Post post;
     private final Stage primaryStage;
@@ -23,7 +21,6 @@ public class PostPage {
         ui.loadTheme("file:styles/default2.css");
 
         VBox postDetails = ui.createVBox("post-window-details", 20);
-
         ui.setLayout(postDetails);
 
         // Back button
@@ -31,20 +28,16 @@ public class PostPage {
 
         // Post card
         VBox postCard = ui.createVBox("post-window-card", 20);
-        HBox userInfo = createPostDetailsHeader(ui, post.getParentUser().getFullName(), post.getAuthor());
+        HBox userInfo = createPostDetailsHeader(ui, post.getParentUser().getFullName(), "@" + post.getAuthor());
         Label postContent = ui.createLabel(post.getContent(), "post-window-details-content", 0);
 
-        HBox commentSection = ui.createHBox("post-window-comment-section", 10);
+        HBox commentSection = ui.createHBox("post-window-comment-box", 10);
         TextField commentArea = ui.createTextField("Add a comment...", "post-window-comment-area", 300);
 
         commentSection.getChildren().addAll(commentArea, ui.createButton("Post Comment", "post-window-post-button", () -> {
             String commentText = commentArea.getText();
             if (!commentText.isEmpty()) {
-                if (comments.isEmpty()) {
-                    postDetails.getChildren().add(createFloatingCommentSection(ui));
-                }
-                Comment newComment = new Comment(commentText, post, post.getParentUser());
-                comments.addFirst(newComment); // Adds the new comment to the top
+                Comment newComment = new Comment(commentText, post, userManager.getCurrentUser());
                 commentArea.clear(); // Clears the comment area text field
                 updateFloatingCommentSection(ui); // Updates the UI
             }
@@ -52,6 +45,11 @@ public class PostPage {
 
         postCard.getChildren().addAll(userInfo, postContent, commentSection);
         postDetails.getChildren().add(postCard);
+
+        // Initialize comment section visibility
+        if (!post.getComments().isEmpty()) {
+            postDetails.getChildren().add(createFloatingCommentSection(ui));
+        }
 
         ui.displayStage();
     }
@@ -88,10 +86,10 @@ public class PostPage {
     private void updateFloatingCommentSection(UiComponent ui) {
         floatingCommentSection.getChildren().clear();
 
-        for (Comment comment : comments) {
+        for (Comment comment : post.getComments()) {
             VBox commentBox = ui.createVBox("post-window-background", 10);
 
-            Label commentLabel = ui.createLabel(comment.getAuthor() + ": " + comment.getContent(), "post-window-floating-comment", 0);
+            Label commentLabel = ui.createLabel("👤- @" + comment.getAuthor() + ": " + comment.getContent(), "post-window-floating-comment", 0);
             commentLabel.setWrapText(true);
 
             // Reply input section
@@ -100,7 +98,7 @@ public class PostPage {
             Button postReplyButton = ui.createButton("Post Reply", "post-window-post-reply-button", () -> {
                 String replyText = replyTextField.getText();
                 if (!replyText.isEmpty()) {
-                    Reply newReply = new Reply(replyText, comment, comment.getParentUser());
+                    Reply newReply = new Reply(replyText, comment, userManager.getCurrentUser());
                     comment.addReply(newReply); // Adds reply to the comment
                     replyTextField.clear(); // Clear the input field
                     updateFloatingCommentSection(ui); // Refresh the UI
@@ -111,9 +109,15 @@ public class PostPage {
             // Replies section
             VBox repliesBox = ui.createVBox("post-window-replies", 10);
             for (Reply reply : comment.getReplies()) {
-                Label replyLabel = ui.createLabel(reply.getAuthor() + ": " + reply.getContent(), "post-window-floating-comment-reply", 0);
-                replyLabel.setWrapText(true);
-                repliesBox.getChildren().add(replyLabel);
+                if(post.getParentUser().equals(userManager.getCurrentUser())){
+                    Label replyLabel = ui.createLabel("@" + reply.getAuthor() + ": " + reply.getContent(), "post-window-floating-comment-owner-reply", 0);
+                    replyLabel.setWrapText(true);
+                    repliesBox.getChildren().add(replyLabel);
+                }else {
+                    Label replyLabel = ui.createLabel("@" + reply.getAuthor() + ": " + reply.getContent(), "post-window-floating-comment-reply", 0);
+                    replyLabel.setWrapText(true);
+                    repliesBox.getChildren().add(replyLabel);
+                }
             }
 
             // Adds components to the comment box

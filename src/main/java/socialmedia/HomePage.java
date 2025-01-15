@@ -16,7 +16,7 @@ public class HomePage extends Application {
         root.setLeft(new NavigationPanelHomePage(primaryStage));
         root.setTop(new HeaderHomePage());
         root.setCenter(new FeedHomePage(primaryStage));
-        root.setRight(new FavoriteHomePage());
+        root.setRight(new FavoriteHomePage(primaryStage));
 
         scene.getStylesheets().add("file:styles/default2.css");
         primaryStage.setTitle("Home Page");

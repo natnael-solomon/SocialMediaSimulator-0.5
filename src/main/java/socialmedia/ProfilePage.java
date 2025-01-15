@@ -61,7 +61,7 @@ public class ProfilePage {
         profilePicture.setClip(new Circle(100, 100, 100));
 
         Label name = uiComponent.createLabel(user.getFullName(), "name", 0.0);
-        Label username = uiComponent.createLabel(user.getUsername(), "username", 0.0);
+        Label username = uiComponent.createLabel("@" + user.getUsername(), "username", 0.0);
         Label bio = uiComponent.createLabel(user.getBio() != null ? user.getBio() : "No bio available.", "bio", 0.0);
         bio.setWrapText(true);
 
