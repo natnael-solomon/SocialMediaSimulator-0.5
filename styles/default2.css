@@ -206,6 +206,13 @@
     -fx-text-fill: #657786; /* Consistent subdued text color */
 }
 
+.post-timestamp {
+    -fx-font-size: 12px;
+    -fx-font-style: italic;
+    -fx-text-fill: #20204d;
+    -fx-padding: 5 5;
+}
+
 /* Post Content */
 .post-content {
     -fx-font-size: 17px;

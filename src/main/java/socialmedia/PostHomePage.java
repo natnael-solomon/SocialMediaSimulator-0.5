@@ -38,7 +38,7 @@ public class PostHomePage extends VBox {
 
         userInfo.getChildren().addAll(fullNameLabel, username);
 
-        postHeader.getChildren().addAll(userInfo, new Label("2h ago"){{getStyleClass().add("post-timestamp");}});
+        postHeader.getChildren().addAll(userInfo, new Label(post.getElapsedTime()){{getStyleClass().add("post-timestamp");}});
         return postHeader;
     }
 

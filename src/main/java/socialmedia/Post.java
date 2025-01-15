@@ -39,8 +39,10 @@ public class Post implements Postable {
             return hours + " hour" + (hours > 1 ? "s" : "") + " ago"; // e.g., "3 hours ago"
         } else if (minutes > 0) {
             return minutes + " minute" + (minutes > 1 ? "s" : "") + " ago"; // e.g., "10 minutes ago"
-        } else {
+        } else if (seconds > 0) {
             return seconds + " second" + (seconds > 1 ? "s" : "") + " ago"; // e.g., "30 seconds ago"
+        } else {
+            return "Just now";
         }
     }
 
