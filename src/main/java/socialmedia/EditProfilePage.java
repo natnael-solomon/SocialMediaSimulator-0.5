@@ -21,21 +21,21 @@ public class EditProfilePage {
     private TextField nameField;
     private TextField usernameField;
     private TextField bioField;
+    private final Stage primaryStage;
+    private final UiComponent uiComponent;
 
-    public EditProfilePage(User user) {
+    public EditProfilePage(User user, Stage primaryStage) {
+        this.primaryStage = primaryStage;
         this.user = user;
+        this.uiComponent = new UiComponent(primaryStage);
         initialize();
     }
 
     private void initialize() {
-        rootLayout = new StackPane();
-        rootLayout.getStyleClass().add("stack-pane");
-        VBox content = new VBox(10);
+        rootLayout = uiComponent.createStackPane("stack-pane");
+        VBox content = uiComponent.createVBox("edit-profile-page", 10);
 
-        content.getStyleClass().add("edit-profile-page");
-
-        Label titleLabel = new Label("Edit Profile");
-        titleLabel.getStyleClass().add("edit-profile-title");
+        Label titleLabel = uiComponent.createLabel("Edit Profile", "edit-profile-title", 0.0);
 
         profilePicture = new ImageView(user.getProfilePicture() != null ? user.getProfilePicture() : new Image("file:icons/profile.jpg", 200, 200, true, true));
         profilePicture.setFitWidth(200);
@@ -43,28 +43,25 @@ public class EditProfilePage {
         profilePicture.setClip(new Circle(100, 100, 100));
         profilePicture.getStyleClass().add("edit-profile-picture");
 
-        Button changePictureButton = new Button("Change Profile Picture");
-        changePictureButton.getStyleClass().add("edit-profile-button");
-        changePictureButton.setOnAction(event -> changeProfilePicture());
+        Button changePictureButton = uiComponent.createButton("Change Profile Picture", "edit-profile-button", this::changeProfilePicture);
 
-        nameField = new TextField(user.getFullName());
-        nameField.setPromptText("Full Name");
-        nameField.getStyleClass().add("edit-profile-field");
+        nameField = uiComponent.createTextField("Full Name", "edit-profile-field", 0);
+        nameField.setText(user.getFullName());
 
-        usernameField = new TextField(user.getUsername());
-        usernameField.setPromptText("Username");
-        usernameField.getStyleClass().add("edit-profile-field");
+        usernameField = uiComponent.createTextField("Username", "edit-profile-field", 0);
+        usernameField.setText(user.getUsername());
 
-        bioField = new TextField(user.getBio());
-        bioField.setPromptText("Bio");
-        bioField.getStyleClass().add("edit-profile-field");
+        bioField = uiComponent.createTextField("Bio", "edit-profile-field", 0);
+        bioField.setText(user.getBio());
 
-        Button saveButton = new Button("Save Changes");
-        saveButton.getStyleClass().add("edit-profile-button");
-        saveButton.setOnAction(event -> saveChanges());
+        Button saveButton = uiComponent.createButton("Save Changes", "edit-profile-button", this::saveChanges);
 
-        content.getChildren().addAll(titleLabel, profilePicture, changePictureButton, new Label("Name:"), nameField,
-                new Label("Username:"), usernameField, new Label("Bio:"), bioField, saveButton);
+        content.getChildren().addAll(titleLabel, profilePicture, changePictureButton,
+                uiComponent.createLabel("Name:", null, 0.0), nameField,
+                uiComponent.createLabel("Username:", null, 0.0), usernameField,
+                uiComponent.createLabel("Bio:", null, 0.0), bioField, saveButton);
+
+        assert rootLayout != null;
         rootLayout.getChildren().add(content);
     }
 
@@ -76,8 +73,7 @@ public class EditProfilePage {
 
     private void changeProfilePicture() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters()
-                .add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
         File selectedFile = fileChooser.showOpenDialog(new Stage());
 
         if (selectedFile != null) {
@@ -95,7 +91,7 @@ public class EditProfilePage {
         //todo: save changes to file or...
 
         // Navigates back to ProfilePage
-        Stage stage = (Stage) rootLayout.getScene().getWindow();
+        Stage stage = primaryStage;
         ProfilePage profilePage = new ProfilePage(user, stage);
         stage.setScene(profilePage.getScene());
     }

@@ -32,7 +32,7 @@
 .name {
     -fx-font-size: 30px;
     -fx-font-weight: bold;
-    -fx-text-fill: linear-gradient(to right, #031038, #0d3234);
+    -fx-text-fill: linear-gradient(to left, #2f5357, #172c57);
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0.5, 0, 2);
 }
 
@@ -48,7 +48,7 @@
     -fx-line-spacing: 5px;
 }
 
-.edit-button {
+.profile-button {
     -fx-font-size: 14px;
     -fx-padding: 10px;
     -fx-background-color: #E8F5FD;
@@ -62,7 +62,7 @@
     -fx-transition: 0.3s;
 }
 
-.edit-button:hover {
+.profile-button:hover {
     -fx-background-color: #D6EDFD;
     -fx-text-fill: #1A91DA;
 }

@@ -115,16 +115,14 @@ public class User {
     //Simple in-house hash function
     public static String hashPassword(String input) {
         int hash = 7;
-        String hashString = "";
+        StringBuilder hashString = new StringBuilder();
 
-        for (int i = 0; i < input.length()-1; i++) {
-            hashString = hashString + 31 * hash + input.charAt(i);
+        for (int i = 0; i < input.length(); i++) {
+            hashString.append(31 * hash).append(hash * input.charAt(i));
+            hashString.append((char) ('A' + hashString.charAt(i) % 52));
         }
 
-        // Combine length of the string with the hash to minimize collisions
-        hashString = hashString + hash * 31+ input.length();
-
-        return hashString;
+        return hashString.toString();
     }
 
     /*

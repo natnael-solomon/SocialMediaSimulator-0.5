@@ -169,10 +169,26 @@ public class UiComponent {
     }
 
     public void showCustomDialog(String title, String message) {
+
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setContentText(message);
+
+        alert.getDialogPane().getStylesheets().add("file:styles/default.css");
         alert.getDialogPane().getStyleClass().add("custom-dialog");
+
+        if (title != null && !title.isEmpty()) {
+            Label headerLabel = new Label(title);
+            headerLabel.getStyleClass().add("header-label");
+            alert.getDialogPane().setHeader(headerLabel);
+        }
+
+        if (message != null && !message.isEmpty()) {
+            Label messageLabel = new Label(message);
+            messageLabel.getStyleClass().add("message-label");
+            alert.getDialogPane().setContent(messageLabel);
+        }
+
         alert.showAndWait();
     }
 
@@ -237,6 +253,19 @@ public class UiComponent {
         HBox hBox = new HBox(spacing);
         addStyleClass(hBox, cssClass);
         return hBox;
+    }
+
+    public StackPane createStackPane(String cssClass) {
+        StackPane stackPane = new StackPane();
+        addStyleClass(stackPane, cssClass);
+        return stackPane;
+
+    }
+
+    public ScrollPane createScrollPane(String cssClass) {
+        ScrollPane scrollPane = new ScrollPane();
+        addStyleClass(scrollPane, cssClass);
+        return scrollPane;
     }
 
     public Stage getStage() {

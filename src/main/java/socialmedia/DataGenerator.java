@@ -10,11 +10,11 @@ public class DataGenerator {
 
     // Dummy user data
     private static final String[][] userData = {
-            {"Natnael Solomon", "@natnael"},
-            {"Nebiyu Samuel", "@nebiyu"},
-            {"Leul Teferi", "@chombe"},
-            {"Leul Zegeye", "@scarlxrd_x"},
-            {"Lealem Addis", "@nowayhome"},
+            {"Natnael Solomon", "natnael"},
+            {"Nebiyu Samuel", "nebiyu"},
+            {"Leul Teferi", "chombe"},
+            {"Leul Zegeye", "scarlxrd_x"},
+            {"Lealem Addis", "nowayhome"},
     };
 
     private static final String[] postContents = {

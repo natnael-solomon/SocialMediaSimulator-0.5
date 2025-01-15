@@ -22,24 +22,23 @@ public class ProfilePage {
     private final User user;
     private ImageView profilePicture;
     private final Stage primaryStage;
+    private final UiComponent uiComponent;
 
     public ProfilePage(User user, Stage primaryStage) {
         this.user = user;
         this.primaryStage = primaryStage;
+        this.uiComponent = new UiComponent(primaryStage);
         initialize();
     }
 
     private void initialize() {
-        rootLayout = new StackPane();
-        rootLayout.getStyleClass().add("stack-pane");
+        rootLayout = uiComponent.createStackPane("stack-pane");
 
-        HBox mainLayout = new HBox();
-        mainLayout.getStyleClass().add("root-layout");
+        HBox mainLayout = uiComponent.createHBox("root-layout", 0);
 
         VBox profileSection = createProfileSection();
         profileSection.setPrefWidth(700);
 
-        // Add posts section on the right
         ScrollPane postsSection = createPostsSection();
         HBox.setHgrow(postsSection, Priority.ALWAYS);
 
@@ -54,70 +53,54 @@ public class ProfilePage {
     }
 
     private VBox createProfileSection() {
-        UiComponent uiComponent = new UiComponent(new Stage());
         VBox profileSection = uiComponent.createVBox("profile-section", 15);
-
-        if (user.getProfilePicture() != null) {
-            profilePicture = new ImageView(user.getProfilePicture());
-        } else {
-            profilePicture = new ImageView(new Image("file:icons/profile.jpg", 400, 400, true, true));
-        }
 
         profilePicture = new ImageView(user.getProfilePicture() != null ? user.getProfilePicture() : new Image("file:icons/profile.jpg", 200, 200, true, true));
         profilePicture.setFitWidth(200);
         profilePicture.setFitHeight(200);
         profilePicture.setClip(new Circle(100, 100, 100));
 
-        // User info
-        Label name = uiComponent.createLabel(user.getFullName(), "name", 0.0); // Add name label
+        Label name = uiComponent.createLabel(user.getFullName(), "name", 0.0);
         Label username = uiComponent.createLabel(user.getUsername(), "username", 0.0);
         Label bio = uiComponent.createLabel(user.getBio() != null ? user.getBio() : "No bio available.", "bio", 0.0);
         bio.setWrapText(true);
 
-        Button backButton = new Button("Back to Home");
-        backButton.setOnAction(event -> navigateBackToHome());
+        Button backButton = uiComponent.createButton("Back to Home", "profile-button", this::navigateBackToHome);
 
         if (userManager.getCurrentUser().getUsername().equals(user.getUsername())) {
-            // Adds edit button
-            ToggleButton editButton = uiComponent.createToggleButton("Edit Profile", "edit-button");
+            ToggleButton editButton = uiComponent.createToggleButton("Edit Profile", "profile-button");
             editButton.setOnAction(event -> openEditProfilePage());
 
             profilePicture.setOnMouseClicked(event -> changeProfilePicture());
-            profileSection.getChildren().addAll(backButton, profilePicture, name, username, bio, editButton);
+            profileSection.getChildren().addAll(profilePicture, name, username, bio, editButton, backButton);
         } else {
             ToggleButton favoriteToggle = uiComponent.createToggleButton("Add to Favorites", "favorite-toggle");
-            favoriteToggle.setSelected(user.getFavoriteUsers().contains(user)); // Check if the user is already a favorite
+            favoriteToggle.setSelected(user.getFavoriteUsers().contains(user));
 
             favoriteToggle.setOnAction(event -> {
                 if (favoriteToggle.isSelected()) {
                     favoriteToggle.setText("Remove from Favorites");
                     // Add to favorites
-                    // Handle adding this user to the current user's favorites
                 } else {
                     favoriteToggle.setText("Add to Favorites");
                     // Remove from favorites
-                    // Handle removing this user from the current user's favorites
                 }
             });
 
-            profileSection.getChildren().addAll(backButton, profilePicture, name, username, bio, favoriteToggle);
+            profileSection.getChildren().addAll(profilePicture, name, username, bio, favoriteToggle, backButton);
         }
         return profileSection;
     }
 
     private ScrollPane createPostsSection() {
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.getStyleClass().add("posts-section-scrollpane");
+        ScrollPane scrollPane = uiComponent.createScrollPane("posts-section-scrollpane");
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
 
-        VBox postsContainer = new VBox();
-        postsContainer.getStyleClass().add("posts-container");
+        VBox postsContainer = uiComponent.createVBox("posts-container", 0);
 
-        // Add user's posts
         if (user.getPosts().isEmpty()) {
-            Label noPostsLabel = new Label("This user has no posts.");
-            noPostsLabel.getStyleClass().add("no-posts-label");
+            Label noPostsLabel = uiComponent.createLabel("This user has no posts.", "no-posts-label", 0.0);
             postsContainer.getChildren().add(noPostsLabel);
         } else {
             for (Post post : user.getPosts()) {
@@ -130,12 +113,10 @@ public class ProfilePage {
     }
 
     private VBox createPost(String content) {
-        VBox postBox = new VBox();
-        postBox.getStyleClass().add("post-box");
+        VBox postBox = uiComponent.createVBox("post-box", 0);
 
-        Label postContent = new Label(content);
+        Label postContent = uiComponent.createLabel(content, "post-content", 0.0);
         postContent.setWrapText(true);
-        postContent.getStyleClass().add("post-content");
 
         postBox.getChildren().add(postContent);
         return postBox;
@@ -157,7 +138,7 @@ public class ProfilePage {
     }
 
     private void openEditProfilePage() {
-        EditProfilePage editProfilePage = new EditProfilePage(user);
+        EditProfilePage editProfilePage = new EditProfilePage(user, primaryStage);
         primaryStage.setScene(editProfilePage.getScene());
     }
 

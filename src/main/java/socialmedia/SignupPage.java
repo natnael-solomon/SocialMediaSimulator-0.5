@@ -34,23 +34,37 @@ public class SignupPage extends Application {
     }
 
     private void handleSignUp(UiComponent ui) {
+        try {
+            String fullName = ui.getTextFieldText(0);
+            String username = ui.getTextFieldText(1);
+            String password = ui.getPasswordFieldText(0);
+            String confirmPassword = ui.getPasswordFieldText(1);
 
-        String fullName = ui.getTextFieldText(0);
-        String username = ui.getTextFieldText(1);
-        String password = ui.getPasswordFieldText(0);
-        String confirmPassword = ui.getPasswordFieldText(1);
+            // Validate input
+            if (fullName.isEmpty() || username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+                ui.showInvalidLoginFeedback("empty field");
+                return;
+            }
 
-        // To Validate input
-        if (fullName.isEmpty()  || username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-            ui.showInvalidLoginFeedback("empty field");
-        } else if (!password.equals(confirmPassword)) {
-            ui.showInvalidLoginFeedback("password");
-        }  else if (Main.userManager.usernameExists(username)) {
-            ui.showInvalidLoginFeedback("username");
-        } else {
+            if (!password.equals(confirmPassword)) {
+                ui.showInvalidLoginFeedback("password");
+                ui.showCustomDialog("Error", "Passwords do not match.");
+                return;
+            }
+
+            if (Main.userManager.usernameExists(username)) {
+                ui.showInvalidLoginFeedback("username");
+                ui.showCustomDialog("Error", "Username already exists.");
+                return;
+            }
+
             currentUser = new User(fullName, username, password);
             Main.userManager.addUser(currentUser);
             ui.showCustomDialog("Success", "Account created successfully! Welcome, " + fullName + "!");
+
+        } catch (Exception e) {
+            ui.showCustomDialog("Error", "An unexpected error occurred: " + e.getMessage());
+            e.printStackTrace();
         }
-    }
+}
 }
