@@ -18,7 +18,7 @@
     -fx-font-size: 25px;
     -fx-font-weight: bold;
     -fx-font-family: "Segoe UI", "Times New Roman";
-    -fx-text-fill: linear-gradient(to top, #048eff, #3cccf6);  /* Gradient effect */
+    -fx-text-fill: linear-gradient(to top, #048eff, #3cccf6);
     -fx-padding: 0 20px 0 0;
 }
 
@@ -84,9 +84,11 @@
 }
 /* Feed Container */
 .feed {
-    -fx-padding: 20;
-    -fx-background-color: linear-gradient(to bottom, #e0eafc, #cfdef3);
+    -fx-padding: 10;
+    -fx-background-color: #cfdef3;
 }
+
+
 
 /* Post Styles */
 .post {
@@ -121,8 +123,6 @@
     -fx-background-color: white;
     -fx-padding: 20;
     -fx-spacing: 20;
-    -fx-border-radius: 10;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 2);
     -fx-alignment: baseline-center;
 }
 
@@ -134,14 +134,14 @@
 
 /* Trend Item */
 .favorite-user {
-    -fx-background-color: linear-gradient(to bottom, #e0eafc, #cfdef3);
+    -fx-background-color: linear-gradient(to bottom, #f2f3f8, #f0f2f5);
     -fx-border-color: linear-gradient(to bottom, #62ace0, #58e7da, #8ef6e0);
-    -fx-text-fill: linear-gradient(to left, #2d42c2, #3c6e72, #1352b9, #0e4fb2, #3c6e72);
+    -fx-text-fill: linear-gradient(to left, #3148ce, #478286, #1863d9, #105ac5, #3c6e72);
     -fx-font-size: 14px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
     -fx-font-weight: bold;
     -fx-padding: 5px 10px;
-    -fx-background-radius: 10px;
-    -fx-border-radius: 10px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0.5, 0, 2);
     -fx-cursor: hand;
     -fx-transition: all 0.3s ease-in-out;
@@ -165,7 +165,7 @@
 
 /* Post Details Styling */
 .post-details {
-    -fx-background-color: transparent; /* Transparent background to blend with post-card */
+    -fx-background-color: transparent;
     -fx-alignment: top-center;
     -fx-padding: 20;
 
@@ -202,14 +202,19 @@
 /* User Icon */
 .post-user-icon {
     -fx-font-size: 36px;
-    -fx-text-fill: #1DA1F2; /* Consistent with Twitter blue */
+    -fx-text-fill: #1DA1F2;
 }
 
 
 /* Post Author */
 .post-username {
     -fx-font-size: 17px;
-    -fx-text-fill: #657786; /* Consistent subdued text color */
+    -fx-text-fill: #657786;
+}
+
+.post-username:hover {
+    -fx-text-fill: #0a397e;
+    -fx-scale-x: 1.01;
 }
 
 .post-timestamp {

@@ -12,21 +12,16 @@ import static socialmedia.Main.userManager;
 
 public class FavoriteHomePage extends ScrollPane {
 
-    private final VBox content;
-    private Stage primaryStage;
-
     public FavoriteHomePage(Stage primaryStage) {
-        this.primaryStage=primaryStage;
 
-        this.content = new VBox();
-        this.content.setSpacing(15);
-        this.content.getStyleClass().add("favorite");
+        VBox content = new VBox();
+        content.getStyleClass().add("favorite");
         this.setVbarPolicy(ScrollBarPolicy.NEVER);
         this.setStyle("-fx-background: white;");
 
         Label title = new Label("Favorite Users");
         title.getStyleClass().add("favorite-title");
-        this.content.getChildren().add(title);
+        content.getChildren().add(title);
 
         List<User> favoriteUsers = userManager.getCurrentUser().getFavoriteUsers();
 
@@ -38,7 +33,7 @@ public class FavoriteHomePage extends ScrollPane {
                 ProfilePage profilePage = new ProfilePage(favoriteUsers.get(finalI), primaryStage);
                 primaryStage.setScene(profilePage.getScene());
             });
-            this.content.getChildren().add(trendItem);
+            content.getChildren().add(trendItem);
         }
 
         this.setContent(content);

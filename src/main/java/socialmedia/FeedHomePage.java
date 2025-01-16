@@ -21,10 +21,11 @@ public class FeedHomePage extends ScrollPane {
         this.getStyleClass().add("feed");
         this.setContent(feed);
         this.setFitToWidth(true);
+        this.setVbarPolicy(ScrollBarPolicy.NEVER);
     }
 
     private VBox createFeedPage() {
-        VBox feed = new VBox(25);
+        VBox feed = new VBox(10);
         feed.getStyleClass().add("feed");
 
         List<User> users = userManager.getUsers();
@@ -35,7 +36,6 @@ public class FeedHomePage extends ScrollPane {
 
         for (User user : users){
             for(Post post : user.getPosts()){
-                String[] userData =  {user.getFullName(), user.getUsername()};
                 feed.getChildren().add(new PostHomePage(post, primaryStage));
             }
         }

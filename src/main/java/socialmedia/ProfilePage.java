@@ -43,6 +43,7 @@ public class ProfilePage {
         HBox.setHgrow(postsSection, Priority.ALWAYS);
 
         mainLayout.getChildren().addAll(profileSection, postsSection);
+        assert rootLayout != null;
         rootLayout.getChildren().add(mainLayout);
     }
 
@@ -104,7 +105,7 @@ public class ProfilePage {
             postsContainer.getChildren().add(noPostsLabel);
         } else {
             for (Post post : user.getPosts()) {
-                postsContainer.getChildren().add(createPost(post.getContent()));
+                postsContainer.getChildren().add(createPost("@"+post.getAuthor()+" "+post.getContent()));
             }
         }
 
