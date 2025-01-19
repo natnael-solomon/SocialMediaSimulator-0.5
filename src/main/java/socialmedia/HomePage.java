@@ -14,7 +14,7 @@ public class HomePage extends Application {
     public void start(Stage primaryStage) {
 
         root.setLeft(new NavigationPanelHomePage(primaryStage));
-        root.setTop(new HeaderHomePage());
+        root.setTop(new HeaderHomePage(primaryStage));
         root.setCenter(new FeedHomePage(primaryStage));
         root.setRight(new FavoriteHomePage(primaryStage));
 

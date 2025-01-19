@@ -69,24 +69,30 @@ public class ProfilePage {
         Button backButton = uiComponent.createButton("Back to Home", "profile-button", this::navigateBackToHome);
 
         if (userManager.getCurrentUser().getUsername().equals(user.getUsername())) {
-            ToggleButton editButton = uiComponent.createToggleButton("Edit Profile", "profile-button");
-            editButton.setOnAction(event -> openEditProfilePage());
 
+            Button editButton = uiComponent.createButton("Edit Profile", "profile-button", this::openEditProfilePage);
             profilePicture.setOnMouseClicked(event -> changeProfilePicture());
             profileSection.getChildren().addAll(profilePicture, name, username, bio, editButton, backButton);
+
         } else {
-            ToggleButton favoriteToggle = uiComponent.createToggleButton("Add to Favorites", "favorite-toggle");
-            favoriteToggle.setSelected(user.getFavoriteUsers().contains(user));
+            ToggleButton favoriteToggle = uiComponent.createToggleButton("favorite-toggle");
+            boolean selected = userManager.getCurrentUser().getFavoriteUsersUsername().contains(user.getUsername());
+
+            if(selected) {
+                favoriteToggle.setText("Remove from Favorites");
+            } else {
+                favoriteToggle.setText("Add to Favorites");
+            }
 
             favoriteToggle.setOnAction(event -> {
-                if (favoriteToggle.isSelected()) {
+                if (selected) {
+                 favoriteToggle.setText("Add to Favorites");
+                   userManager.getCurrentUser().removeFromFavoriteUsers(user);
+                 } else {
                     favoriteToggle.setText("Remove from Favorites");
-                    // Add to favorites
-                } else {
-                    favoriteToggle.setText("Add to Favorites");
-                    // Remove from favorites
-                }
-            });
+                    userManager.getCurrentUser().addToFavoriteUsers(user);
+            }
+         });
 
             profileSection.getChildren().addAll(profilePicture, name, username, bio, favoriteToggle, backButton);
         }

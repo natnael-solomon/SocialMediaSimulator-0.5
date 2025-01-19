@@ -25,7 +25,7 @@ public class FavoriteHomePage extends ScrollPane {
 
         List<User> favoriteUsers = userManager.getCurrentUser().getFavoriteUsers();
 
-        for (int i = 1; i < favoriteUsers.size(); i++) {
+        for (int i = 0; i < favoriteUsers.size(); i++) {
             Button trendItem = new Button(favoriteUsers.get(i).getFullName());
             trendItem.getStyleClass().add("favorite-user");
             int finalI = i;

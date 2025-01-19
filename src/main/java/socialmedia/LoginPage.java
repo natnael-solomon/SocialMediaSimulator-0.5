@@ -31,16 +31,15 @@ public class LoginPage extends Application {
             String password = ui.getPasswordFieldText(0);
 
             if (userManager.validateLogin(username, password)) {
+
                 currentUser = userManager.findUserByUsername(username);
                 userManager.setCurrentUser(currentUser);
-
-                ui.resetFields();
 
                 HomePage homePage = new HomePage();
                 homePage.start(primaryStage);
 
             } else {
-                ui.showInvalidLoginFeedback("empty field");
+                ui.invalidInput("general");
             }
         });
 
@@ -54,6 +53,7 @@ public class LoginPage extends Application {
 
 
         ui.createButton("Sign Up", "button", () -> {
+            ui.clearLayout();
             SignupPage signUpPage = new SignupPage();
             signUpPage.start(primaryStage);
         });
@@ -66,9 +66,5 @@ public class LoginPage extends Application {
         ui.createLabel("2025 G.C", "footer-login", 1.5);
 
         ui.displayStage();
-    }
-
-    public User getCurrentUser() {
-        return currentUser;
     }
 }

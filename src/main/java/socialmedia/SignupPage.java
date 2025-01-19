@@ -42,18 +42,18 @@ public class SignupPage extends Application {
 
             // Validate input
             if (fullName.isEmpty() || username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-                ui.showInvalidLoginFeedback("empty field");
+                ui.invalidInput("general");
                 return;
             }
 
             if (!password.equals(confirmPassword)) {
-                ui.showInvalidLoginFeedback("password");
+                ui.invalidInput("password");
                 ui.showCustomDialog("Error", "Passwords do not match.");
                 return;
             }
 
             if (Main.userManager.usernameExists(username)) {
-                ui.showInvalidLoginFeedback("username");
+                ui.invalidInput("username");
                 ui.showCustomDialog("Error", "Username already exists.");
                 return;
             }

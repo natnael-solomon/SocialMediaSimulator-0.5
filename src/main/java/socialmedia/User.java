@@ -2,8 +2,9 @@ package socialmedia;
 
 import javafx.scene.image.Image;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+
 
 public class User {
 
@@ -13,6 +14,7 @@ public class User {
     private String bio;
     private String password;
     private final List<User> favoriteUsers;
+    private final List<String> favoriteUsersUsername;
     private final List<Post> posts;
 
 
@@ -26,8 +28,9 @@ public class User {
         this.password = hashPassword(password);
         this.profilePicture = profilePicture;
         this.bio = bio;
-        this.favoriteUsers= new ArrayList<>();
-        this.posts = new ArrayList<>();
+        this.favoriteUsers= new LinkedList<>();
+        this.favoriteUsersUsername = new LinkedList<>();
+        this.posts = new LinkedList<>();
     }
 
     public User(String fullName, String username, String password, Image profilePicture) {
@@ -88,7 +91,7 @@ public class User {
 
 
     public List<Post> getPosts() {
-        return new ArrayList<>(posts);
+        return new LinkedList<>(posts);
     }
 
 
@@ -105,11 +108,23 @@ public class User {
     }
 
     public List<User> getFavoriteUsers() {
-        return new ArrayList<>(favoriteUsers);
+        return new LinkedList<>(favoriteUsers);
+    }
+
+
+    public List<String> getFavoriteUsersUsername(){
+        return new LinkedList<>(favoriteUsersUsername);
     }
 
     public void addToFavoriteUsers(User user) {
-        this.favoriteUsers.add(user);
+        this.favoriteUsers.addFirst(user);
+        this.favoriteUsersUsername.addFirst(user.username);
+        favoriteUsers.sort((o1, o2) -> o1.getFullName().compareToIgnoreCase(o2.getFullName()));
+    }
+
+    public void removeFromFavoriteUsers(User user) {
+        favoriteUsers.remove(user);
+        favoriteUsersUsername.remove(user.getUsername());
     }
 
     //Simple in-house hash function
@@ -118,9 +133,18 @@ public class User {
         StringBuilder hashString = new StringBuilder();
 
         for (int i = 0; i < input.length(); i++) {
-            hashString.append(31 * hash).append(hash * input.charAt(i));
-            hashString.append((char) ('A' + hashString.charAt(i) % 52));
+
+            hash = hash * 31 * input.charAt(i);
+
+            // Map to printable characters
+            char newChar = (char) ('A' + Math.abs(hash % 62));
+
+
+            hashString.append(newChar);
         }
+
+        hashString.append((char) ('A' + Math.abs(hash * input.length() % 62)));
+        hashString.insert(Math.abs(hash*31)%hashString.length(),Math.abs(hash));
 
         return hashString.toString();
     }

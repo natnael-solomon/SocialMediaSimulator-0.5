@@ -22,7 +22,7 @@ public class Comment implements Postable {
         this.parentPost = parentPost;
         this.parentUser= parentUser;
         this.replies = new ArrayList<>();
-        this.parentPost.addComment(this);
+        parentPost.addComment(this);
     }
 
     public User getParentUser() {

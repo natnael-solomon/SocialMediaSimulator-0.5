@@ -10,19 +10,19 @@ public class DataGenerator {
 
     // Dummy user data
     private static final String[][] userData = {
-            {"Natnael Solomon", "natnael"},
-            {"Leul Teferi", "chombe"},
-            {"Leul Zegeye", "scarlxrd_x"},
-            {"Lealem Addis", "nowayhome"},
-            {"Abel Getachew", "sociopath"},
-            {"Abenezer Daniel", "Abenixo"},
-            {"Zerubabel Takele", "zeritu"},
-            {"Nikodimos Hunegn", "nikolas"},
-            {"Nebiyu Hailemariam", "arsenal"},
-            {"Yosef Tadesse", "yosef"},
-            {"Yohannes Afework", "yoniman"},
             {"Yared Feleke", "yarednegu"},
+            {"Yohannes Afework", "yoniman"},
+            {"Yosef Tadesse", "yosef"},
+            {"Nebiyu Hailemariam", "arsenal"},
+            {"Nikodimos Hunegn", "nikolas"},
+            {"Zerubabel Takele", "zeritu"},
+            {"Abenezer Daniel", "Abenixo"},
+            {"Abel Getachew", "sociopath"},
+            {"Lealem Addis", "lealem"},
+            {"Natnael Solomon", "natnael"},
+            {"Leul Zegeye", "scarlxrd_x"},
             {"Nebiyu Samuel", "nebiyu"},
+            {"Leul Teferi", "chombe"}
     };
 
     private static final String[] postContents = {
@@ -37,13 +37,11 @@ public class DataGenerator {
 
     private static final String[] commentContents = {
             "Me too!",
-            "We were waiting for you, brother.",
             "A man of culture! Good seeing you here.",
             "Very inspiring post!"
     };
 
     private static final String[] replyContents = {
-            "Thanks a lot!",
             "I appreciate it!",
             "Haha"
     };
@@ -62,7 +60,7 @@ public class DataGenerator {
             String fullName = userDatum[0];
             String username = userDatum[1];
             String password = "password";
-            String bio = "This is a bio";
+            String bio = "This is a default bio";
 
             User user = new User(fullName, username, password, bio);
 
@@ -75,7 +73,7 @@ public class DataGenerator {
         for (User user : users) {
                 for (User potentialFavorite : users) {
 
-                    if (!user.getUsername().equals(potentialFavorite.getUsername())) {
+                    if (!user.getUsername().equals(potentialFavorite.getUsername()) && !potentialFavorite.getUsername().equals("chombe")) {
                         user.addToFavoriteUsers(potentialFavorite);
                     }
                 }
@@ -100,14 +98,12 @@ public class DataGenerator {
 
             generateReplies(comment);
 
-            post.addComment(comment);
         }
     }
 
     private static void generateReplies(Comment comment) {
         for (String replyContent : replyContents) {
             Reply reply = new Reply(replyContent, comment, comment.getParentUser());
-            comment.addReply(reply);
         }
     }
 }

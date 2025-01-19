@@ -74,6 +74,13 @@ public class UiComponent {
         return label;
     }
 
+    public Label createLabelWithAction(String text, String cssClass, Runnable action) {
+        Label label = new Label(text);
+        addStyleClass(label, cssClass);
+        label.setOnMouseClicked(event -> action.run());
+        return label;
+    }
+
     public TextField createTextField(String placeholder, String cssClass, double maxWidth) {
         TextField textField = new TextField();
         textField.setPromptText(placeholder);
@@ -133,8 +140,8 @@ public class UiComponent {
         return button;
     }
 
-    public ToggleButton createToggleButton(String initialText, String cssClass) {
-        ToggleButton toggleButton = new ToggleButton(initialText);
+    public ToggleButton createToggleButton(String cssClass) {
+        ToggleButton toggleButton = new ToggleButton();
 
         addStyleClass(toggleButton, cssClass);
 
@@ -192,7 +199,8 @@ public class UiComponent {
         alert.showAndWait();
     }
 
-    public void showInvalidLoginFeedback(String type) {
+
+    public void invalidInput(String type) {
 
         switch (type){
             case "username": {
@@ -208,7 +216,7 @@ public class UiComponent {
                 }
                 break;
             }
-             case "empty field": {
+             case "general": {
 
                  for (TextField field : textFields) {
                      if (field.getText().isEmpty()) {

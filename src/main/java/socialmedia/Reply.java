@@ -17,6 +17,7 @@ public class Reply implements Postable {
         this.author = parentUser.getUsername();
         this.parentComment = parentComment;
         this.timestamp = LocalDateTime.now();
+        parentComment.addReply(this);
     }
 
     public Comment getParentComment() {
