@@ -1,21 +1,23 @@
+
+
 /* Root layout */
 .root-layout {
-    -fx-background-color: linear-gradient(to bottom, #e0eafc, #cfdef3);
+    -fx-background-color:  #121212;
     -fx-spacing: 20px;
     -fx-padding: 20px;
 }
 
 /* StackPane style */
 .stack-pane {
-    -fx-background-color: linear-gradient(to bottom, #f0f4f8, #d9e2ec);
+    -fx-background-color: linear-gradient(to bottom, #222831, #393e46);
 }
 
 /* Profile Section */
 .profile-section {
     -fx-alignment: top-center;
-    -fx-background-color: #ffffff;
+    -fx-background-color: #1E1E1E;
     -fx-padding: 20px;
-    -fx-border-color: #e1e5e9;
+    -fx-border-color: #333;
     -fx-border-width: 1px;
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
@@ -32,71 +34,66 @@
 .name {
     -fx-font-size: 30px;
     -fx-font-weight: bold;
-    -fx-text-fill: linear-gradient(to left, #2f5357, #172c57);
+    -fx-text-fill: linear-gradient(to left, #00adb5, #00FFFFFF);
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0.5, 0, 2);
 }
 
 .username {
     -fx-font-size: 26px;
     -fx-font-weight: bold;
-    -fx-text-fill: linear-gradient(to left, #3c6e72, #0046b7);
+    -fx-text-fill: linear-gradient(to left, #00adb5, #00FFFFFF);
 }
 
 .bio {
     -fx-font-size: 15px;
-    -fx-text-fill: #64748b;
+    -fx-text-fill: #e0e0e0;
     -fx-line-spacing: 5px;
 }
 
 .profile-button {
     -fx-font-size: 14px;
     -fx-padding: 10px;
-    -fx-background-color: #E8F5FD;
-    -fx-border-color: #1DA1F2;
+    -fx-background-color: #393e46;
+    -fx-border-color: #00adb5;
     -fx-border-width: 1;
     -fx-border-radius: 15;
     -fx-background-radius: 15;
-    -fx-text-fill: #1DA1F2;
+    -fx-text-fill: #00adb5;
     -fx-cursor: hand;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 5, 0, 0, 1);
     -fx-transition: 0.3s;
 }
 
 .profile-button:hover {
-    -fx-background-color: #D6EDFD;
-    -fx-text-fill: #1A91DA;
+    -fx-background-color: #444;
+    -fx-text-fill: #00adb5;
 }
 
 .favorite-toggle {
     -fx-font-size: 14px;
     -fx-padding: 10px;
-    -fx-background-color: #E8F5FD;
-    -fx-border-color: #1DA1F2;
+    -fx-background-color: #393e46;
+    -fx-border-color: #00adb5;
     -fx-border-width: 1;
     -fx-border-radius: 15;
     -fx-background-radius: 15;
-    -fx-text-fill: #1DA1F2;
+    -fx-text-fill: #00adb5;
     -fx-cursor: hand;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 5, 0, 0, 1);
     -fx-transition: 0.3s;
 }
 
 .favorite-toggle:selected {
-    -fx-background-color: #D6EDFD;
-    -fx-text-fill: #1A91DA;
+    -fx-background-color: #444;
+    -fx-text-fill: #00adb5;
 }
 
 /* Posts Section */
-.posts-section-scrollpane {
-    -fx-background-color: transparent;
-    -fx-padding: 0;
-    -fx-border-width: 0;
-}
 
 .posts-section-scrollpane {
-    -fx-background-color: #ffffff;
+    -fx-background-color: #1E1E1E;
     -fx-padding: 20px;
-    -fx-border-color: #e1e5e9;
+    -fx-border-color: #333;
     -fx-border-width: 1px;
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
@@ -106,16 +103,13 @@
 .posts-container {
     -fx-spacing: 15px;
     -fx-padding: 15px;
-    -fx-background-color: #ffffff;
-    -fx-border-color: #ffffff;
-    -fx-border-radius: 10px;
-    -fx-background-radius: 10px;
+    -fx-background-color: #1E1E1E;
 }
 
 .post-box {
-    -fx-background-color: #f3f4f6;
+    -fx-background-color: #333;
     -fx-padding: 15px;
-    -fx-border-color: #d1d5db;
+    -fx-border-color: #444;
     -fx-border-width: 1px;
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
@@ -124,7 +118,7 @@
 
 .post-content {
     -fx-font-size: 14px;
-    -fx-text-fill: #334155;
+    -fx-text-fill: #e0e0e0;
 }
 
 .no-posts-label {
@@ -138,9 +132,9 @@
 /* Edit Profile Page */
 .edit-profile-page {
     -fx-alignment: top-center;
-    -fx-background-color: #ffffff;
+    -fx-background-color:#121212;
     -fx-padding: 20px;
-    -fx-border-color: #e1e5e9;
+    -fx-border-color: #333;
     -fx-border-width: 1px;
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
@@ -153,6 +147,7 @@
 .edit-profile-title {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
+    -fx-text-fill: #00adb5;
 }
 
 .edit-profile-picture {
@@ -164,28 +159,30 @@
 .edit-profile-button {
     -fx-font-size: 14px;
     -fx-padding: 10px;
-    -fx-background-color: #E8F5FD;
-    -fx-border-color: #1DA1F2;
+    -fx-background-color: #393e46;
+    -fx-border-color: #00adb5;
     -fx-border-width: 1;
     -fx-border-radius: 15;
     -fx-background-radius: 15;
-    -fx-text-fill: #1DA1F2;
+    -fx-text-fill: #00adb5;
     -fx-cursor: hand;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 5, 0, 0, 1);
     -fx-transition: 0.3s;
 }
 
 .edit-profile-button:hover {
-    -fx-background-color: #D6EDFD;
-    -fx-text-fill: #1A91DA;
+    -fx-background-color: #444;
+    -fx-text-fill: #00adb5;
 }
 
 .edit-profile-field {
     -fx-max-width: 400px;
     -fx-font-size: 15px;
     -fx-padding: 10px;
-    -fx-border-color: #e1e5e9;
+    -fx-border-color: #333;
     -fx-border-width: 1px;
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
+    -fx-background-color: #1E1E1E;
+    -fx-text-fill: #e0e0e0;
 }
