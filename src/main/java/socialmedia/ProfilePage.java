@@ -76,21 +76,24 @@ public class ProfilePage {
 
         } else {
             ToggleButton favoriteToggle = uiComponent.createToggleButton("favorite-toggle");
-            boolean selected = userManager.getCurrentUser().getFavoriteUsersUsername().contains(user.getUsername());
+            final boolean[] selected = {userManager.getCurrentUser().getFavoriteUsersUsername().contains(user.getUsername())};
 
-            if(selected) {
+            if(selected[0]) {
                 favoriteToggle.setText("Remove from Favorites");
             } else {
                 favoriteToggle.setText("Add to Favorites");
             }
 
             favoriteToggle.setOnAction(event -> {
-                if (selected) {
+                if (selected[0]) {
                  favoriteToggle.setText("Add to Favorites");
                    userManager.getCurrentUser().removeFromFavoriteUsers(user);
+                    selected[0] = false;
+
                  } else {
                     favoriteToggle.setText("Remove from Favorites");
                     userManager.getCurrentUser().addToFavoriteUsers(user);
+                    selected[0] = true;
             }
          });
 

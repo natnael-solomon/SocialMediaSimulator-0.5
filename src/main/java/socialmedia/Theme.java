@@ -29,7 +29,7 @@ public class Theme extends Application {
         ui.addButton("Toggle Theme", "button", () -> {
             String currentTheme = ui.getScene().getStylesheets().get(0);
             if (currentTheme.contains("default.css")) {
-                ui.loadTheme("file:styles/dark.css");
+                ui.loadTheme("file:styles/defaultdark.css");
             } else {
                 ui.loadTheme("file:styles/default.css");
             }

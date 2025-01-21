@@ -22,7 +22,6 @@ public class HeaderHomePage extends HBox {
     private final TextField searchField;
 
     public HeaderHomePage(Stage primaryStage) {
-        UiComponent ui = new UiComponent(primaryStage);
         this.setSpacing(20);
         this.getStyleClass().add("header");
         this.setAlignment(Pos.CENTER_LEFT);
@@ -76,7 +75,7 @@ public class HeaderHomePage extends HBox {
 
     private Label createLabel() {
         Label label = new Label("Simple Social Media Simulator");
-        label.getStyleClass().add("logo");
+        label.getStyleClass().add("title");
         return label;
     }
 

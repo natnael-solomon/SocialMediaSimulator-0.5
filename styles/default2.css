@@ -13,7 +13,7 @@
     -fx-alignment: center-left;
 }
 
-.logo {
+.title {
     -fx-font-size: 25px;
     -fx-font-weight: bold;
     -fx-font-family: "Segoe UI", "Times New Roman";

@@ -17,7 +17,7 @@ public class FavoriteHomePage extends ScrollPane {
         VBox content = new VBox();
         content.getStyleClass().add("favorite");
         this.setVbarPolicy(ScrollBarPolicy.NEVER);
-        this.setStyle("-fx-background: white;");
+        this.getStyleClass().add("favorite-scroll-pane");
 
         Label title = new Label("Favorite Users");
         title.getStyleClass().add("favorite-title");
@@ -36,7 +36,14 @@ public class FavoriteHomePage extends ScrollPane {
             content.getChildren().add(trendItem);
         }
 
+        if (favoriteUsers.isEmpty()) {
+            Label noFavorites = new Label("You have no favorite users.");
+            noFavorites.getStyleClass().add("favorite-user");
+            content.getChildren().add(noFavorites);
+        }
+
         this.setContent(content);
         this.setFitToWidth(true);
+        this.setFitToHeight(true);
     }
 }

@@ -30,7 +30,6 @@ public class FeedHomePage extends ScrollPane {
         VBox feed = new VBox(10);
         feed.getStyleClass().add("feed");
 
-        List<User> users = userManager.getUsers();
 
         List<User> favoriteUsers = userManager.getCurrentUser().getFavoriteUsers();
         List<Post> currentUserPosts = userManager.getCurrentUser().getPosts();

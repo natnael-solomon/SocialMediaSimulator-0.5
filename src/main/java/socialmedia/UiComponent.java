@@ -86,6 +86,7 @@ public class UiComponent {
         textField.setPromptText(placeholder);
         addStyleClass(textField, cssClass);
         textField.setMaxWidth(maxWidth);
+        textField.setFocusTraversable(false);
         textFields.add(textField);
         addNode(textField);
         return textField;
@@ -96,6 +97,7 @@ public class UiComponent {
         passwordField.setPromptText(placeholder);
         addStyleClass(passwordField, cssClass);
         passwordField.setMaxWidth(maxWidth);
+        passwordField.setFocusTraversable(false);
         passwordFields.add(passwordField);
         addNode(passwordField);
         return passwordField;
@@ -232,7 +234,7 @@ public class UiComponent {
         }
 
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(1));
+        PauseTransition pause = new PauseTransition(Duration.seconds(2));
         pause.setOnFinished(event -> resetFields());
         pause.play();
     }
