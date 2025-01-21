@@ -74,19 +74,19 @@
 }
 
 .button-small {
-    -fx-background-color: #5b5d64;
+    -fx-background-color: linear-gradient(to right, #213398, #207577);
     -fx-text-fill: white;
     -fx-font-weight: bold;
-    -fx-font-size: 11px;
+    -fx-font-size: 12px;
+    -fx-min-width: 70px;
     -fx-font-style: normal;
     -fx-padding: 5px 10px;
     -fx-background-radius: 25px;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 3, 0.3, 0, 2);
     -fx-cursor: hand;
 }
 
 .button-small:hover {
-    -fx-background-color: linear-gradient(to right, #485575, #76949a);
+    -fx-background-color: linear-gradient(to right, #213398, #207577);
 }
 
 .button-small:pressed {
@@ -164,7 +164,6 @@
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
     -fx-spacing: 15px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.15), 10, 0, 0, 2);
     -fx-max-width: 600px;
     -fx-max-height: 500px;
     -fx-text-fill: linear-gradient(to left, #3c6e72, #0046b7);
@@ -172,6 +171,7 @@
     -fx-border-width: 1;
     -fx-background-color: white;
     -fx-transition: 0.3s;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 100, 0.1, 0, 0);
 }
 
 /* Feed post styling */

@@ -12,11 +12,26 @@ public class Validator {
         }
 
         // Length check
-        if (username.length() < 3 || username.length() > 20) {
-            throw new InvalidUsernameException("Username must be between 3 and 20 characters.");
-        }
         if (password.length() < 8) {
             throw new InvalidPasswordException("Password must be at least 8 characters.");
+        }
+
+    }
+
+
+    public static void validateFields(String fullname, String username, String password, String confirmPassword) throws EmptyFieldException, InvalidUsernameException, InvalidPasswordException, InvalidFullNameException {
+
+        if (fullname.isEmpty() || username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+            throw new EmptyFieldException("All fields are required.");
+        }
+
+        if (!isValidFullName(fullname)) {
+            throw new InvalidFullNameException("Full name must contain at least two words, starting with uppercase letters.");
+        }
+
+        // Length check
+        if (username.length() < 3 || username.length() > 20) {
+            throw new InvalidUsernameException("Username must be between 3 and 20 characters.");
         }
 
         // (alphanumeric and underscore)
@@ -31,7 +46,11 @@ public class Validator {
             throw new InvalidUsernameException("Username can only contain letters, numbers, and underscores.");
         }
 
-       //(at least one uppercase letter, one digit, and one special character)
+        if (password.length() < 8) {
+            throw new InvalidPasswordException("Password must be at least 8 characters.");
+        }
+
+        //(at least one uppercase letter, one digit, and one special character)
         boolean hasUppercase = false;
         boolean hasDigit = false;
         boolean hasSpecialChar = false;
@@ -44,5 +63,29 @@ public class Validator {
         if (!hasUppercase || !hasDigit || !hasSpecialChar) {
             throw new InvalidPasswordException("Password must contain at least one uppercase letter, digit, and special character.");
         }
+
+        if (!password.equals(confirmPassword)) {
+            throw new InvalidPasswordException("Passwords do not match.");
+        }
     }
+
+    private static boolean isValidFullName(String fullName) {
+        // Splits the full name into words
+        String[] words = fullName.trim().split("\\s+");
+
+        // Ensures there are at least two words
+        if (words.length < 2) {
+            return false;
+        }
+
+        // Checks that each word starts with an uppercase letter and is followed by lowercase letters
+        for (String word : words) {
+            if (word.isEmpty() || !Character.isUpperCase(word.charAt(0)) || !word.substring(1).chars().allMatch(Character::isLowerCase)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }

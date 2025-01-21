@@ -1,70 +1,118 @@
-
 package socialmedia;
 
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
 import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import static socialmedia.Main.userManager;
+import static socialmedia.ValidationExceptions.*;
 
 public class SignupPage extends Application {
 
-    User currentUser;
+    private Label errorLabel;
 
     @Override
     public void start(Stage primaryStage) {
-
         UiComponent ui = new UiComponent(primaryStage);
 
+        // Set layout
+        VBox layout = ui.createVBox("container", 20);
 
-        ui.configureStage("Sign Up Page");
-        ui.loadTheme("file:styles/default.css");
+        Label titleLabel = ui.createLabel("Create a New Account", "label-first", 0.4);
+        TextField fullNameField = ui.createTextField("Full Name", "field", 300);
+        TextField usernameField = ui.createTextField("Username", "field", 300);
+        PasswordField passwordField = ui.createPasswordField("Create Password", "field", 300);
+        PasswordField confirmPasswordField = ui.createPasswordField("Confirm Password", "field", 300);
 
-        ui.setLayout( ui.createVBox("layout", 20));
+        errorLabel = ui.createLabel("", "hidden", 0);
 
-        ui.createLabel("Create a New Account", "label-first", 0.1);
+        Button signUpButton = ui.createButton("Sign Up", "button", () -> {
+            handleSignUp(
+                    ui,
+                    fullNameField.getText().trim(),
+                    usernameField.getText().trim(),
+                    passwordField.getText().trim(),
+                    confirmPasswordField.getText().trim()
+            );
+        });
 
-        ui.createTextField("Full Name", "field", 300);
-        ui.createTextField("Username", "field", 300);
-        ui.createPasswordField("Create Password", "field", 300);
-        ui.createPasswordField("Confirm Password", "field", 300);
+        Button backToLoginButton = ui.createButton("Back to Login", "button-small", () -> {
+            LoginPage loginPage = new LoginPage();
+            loginPage.start(primaryStage);
+        });
 
+        // Add components to layout
+        layout.getChildren().addAll(
+                titleLabel,
+                fullNameField,
+                usernameField,
+                passwordField,
+                confirmPasswordField,
+                errorLabel,
+                signUpButton,
+                backToLoginButton
+        );
 
-        ui.createButton("Sign Up", "button", () -> handleSignUp(ui));
-        ui.createButton("Back to Login", "button-small", () -> new LoginPage().start(primaryStage));
+        StackPane rootLayout = ui.createStackPane("layout");
+        rootLayout.getChildren().add(layout);
 
-        ui.displayStage();
+        Scene scene = new Scene(rootLayout, 1200, 700);
+        scene.getStylesheets().add("file:styles/default.css");
+
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Sign Up Page");
+        primaryStage.show();
     }
 
-    private void handleSignUp(UiComponent ui) {
+    private void handleSignUp(UiComponent ui, String fullName, String username, String password, String confirmPassword) {
         try {
-            String fullName = ui.getTextFieldText(0);
-            String username = ui.getTextFieldText(1);
-            String password = ui.getPasswordFieldText(0);
-            String confirmPassword = ui.getPasswordFieldText(1);
-
-            // Validate input
-            if (fullName.isEmpty() || username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-                ui.invalidInput("general");
-                return;
-            }
+            // Validates input
+            Validator.validateFields(fullName, username, password, confirmPassword);
 
             if (!password.equals(confirmPassword)) {
-                ui.invalidInput("password");
-                ui.showCustomDialog("Error", "Passwords do not match.");
-                return;
+                throw new PasswordMismatchException("Passwords do not match.");
             }
 
-            if (Main.userManager.usernameExists(username)) {
-                ui.invalidInput("username");
-                ui.showCustomDialog("Error", "Username already exists.");
-                return;
+            if (userManager.usernameExists(username)) {
+                throw new UsernameAlreadyExistsException("Username already exists.");
             }
 
-            currentUser = new User(fullName, username, password);
-            Main.userManager.addUser(currentUser);
-            ui.showCustomDialog("Success", "Account created successfully! Welcome, " + fullName + "!");
+            // Creates the user object after validation
+            User currentUser = new User(fullName, username, password);
+            userManager.addUser(currentUser);
 
-        } catch (Exception e) {
-            ui.showCustomDialog("Error", "An unexpected error occurred: " + e.getMessage());
-            e.printStackTrace();
+
+        } catch (PasswordMismatchException | UsernameAlreadyExistsException | InvalidFullNameException |
+                 InvalidPasswordException | InvalidUsernameException | EmptyFieldException e) {
+            showError(e.getMessage());
+            ui.invalidInput("general");
         }
-}
+    }
+
+    private final PauseTransition pause = new PauseTransition(Duration.seconds(3));
+
+    private void showError(String message) {
+        if (!errorLabel.getText().equals(message)) {
+            errorLabel.setText(message);
+        }
+
+        errorLabel.getStyleClass().remove( "hidden");
+        errorLabel.getStyleClass().add("visible");
+
+        pause.setOnFinished(event -> hideError());
+        pause.play();
+    }
+
+    private void hideError() {
+        errorLabel.getStyleClass().remove("visible");
+        errorLabel.getStyleClass().add("hidden");
+    }
 }

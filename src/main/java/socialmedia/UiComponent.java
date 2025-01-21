@@ -153,7 +153,7 @@ public class UiComponent {
     public ImageView createImage(String imagePath, String cssClass) {
         ImageView imageView = new ImageView(new Image(imagePath));
         addStyleClass(imageView, cssClass);
-        fadeIn(imageView, 0.4);
+        fadeIn(imageView, 0);
         addNode(imageView);
         return imageView;
     }
@@ -234,7 +234,7 @@ public class UiComponent {
         }
 
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+        PauseTransition pause = new PauseTransition(Duration.seconds(1));
         pause.setOnFinished(event -> resetFields());
         pause.play();
     }

@@ -29,4 +29,22 @@ public class ValidationExceptions {
             super(message);
         }
     }
+
+    public static class InvalidFullNameException extends Exception {
+        public InvalidFullNameException(String message) {
+            super(message);
+        }
+    }
+
+    public static class PasswordMismatchException extends Exception {
+        public PasswordMismatchException(String message) {
+            super(message);
+        }
+    }
+
+    public static class UsernameAlreadyExistsException extends Exception {
+        public UsernameAlreadyExistsException(String message) {
+            super(message);
+        }
+    }
 }

@@ -41,10 +41,10 @@ public class LoginPage extends Application {
             String password = passwordField.getText().trim();
 
             try {
-                // Validate the fields
+                // Validates the fields
                 Validator.validateFields(username, password);
 
-                // Check if user credentials are valid
+                // Checks if user credentials are valid
                 if (userManager.validateLogin(username, password)) {
                     currentUser = userManager.findUserByUsername(username);
                     userManager.setCurrentUser(currentUser);
@@ -54,22 +54,22 @@ public class LoginPage extends Application {
                 } else {
                     throw new InvalidCredentialsException("Incorrect username or password.");
                 }
-            } catch (EmptyFieldException | InvalidUsernameException | InvalidPasswordException | InvalidCredentialsException e) {
+            } catch (EmptyFieldException | InvalidCredentialsException | InvalidUsernameException | InvalidPasswordException e) {
                 showError(e.getMessage());
                 ui.invalidInput("general");
             }
         });
 
 
-        Label spacingLabel = ui.createLabel("", "", 1);
+        Label spacingLabel = ui.createLabel("", "", 0);
 
-        Button signUpButton = ui.createButton("Sign Up", "button", () -> {
+        Button signUpButton = ui.createButton("Sign Up", "button-small", () -> {
             SignupPage signUpPage = new SignupPage();
             signUpPage.start(primaryStage);
         });
 
 
-        Label footerLabel = ui.createLabel("2025 G.C", "footer-login", 1.5);
+        Label footerLabel = ui.createLabel("2025 G.C", "footer-login", 1);
 
         // Adds each component to the layout
         layout.getChildren().addAll(appIcon, titleLabel, usernameField, passwordField, loginButton, errorLabel, spacingLabel, signUpButton, footerLabel);
@@ -89,18 +89,29 @@ public class LoginPage extends Application {
         primaryStage.show();
     }
 
-    private void showError(String message) {
-        errorLabel.setText(message);
-        errorLabel.getStyleClass().remove("hidden");
-        errorLabel.getStyleClass().add("visible");
+    private final PauseTransition pause = new PauseTransition(Duration.seconds(2));
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(3));
-        pause.setOnFinished(event -> {
-            errorLabel.getStyleClass().remove("visible");
-            errorLabel.getStyleClass().add("hidden");
-        });
+    private void showError(String message) {
+        if (!errorLabel.getText().equals(message)) {
+            errorLabel.setText(message);
+        }
+
+        if (!errorLabel.getStyleClass().contains("visible")) {
+            errorLabel.getStyleClass().remove("hidden");
+            errorLabel.getStyleClass().add("visible");
+        }
+
+        pause.setOnFinished(event -> hideError());
         pause.play();
     }
+
+    private void hideError() {
+        if (!errorLabel.getStyleClass().contains("hidden")) {
+            errorLabel.getStyleClass().remove("visible");
+            errorLabel.getStyleClass().add("hidden");
+        }
+    }
+
 }
 
 
