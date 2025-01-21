@@ -74,13 +74,6 @@ public class UiComponent {
         return label;
     }
 
-    public Label createLabelWithAction(String text, String cssClass, Runnable action) {
-        Label label = new Label(text);
-        addStyleClass(label, cssClass);
-        label.setOnMouseClicked(event -> action.run());
-        return label;
-    }
-
     public TextField createTextField(String placeholder, String cssClass, double maxWidth) {
         TextField textField = new TextField();
         textField.setPromptText(placeholder);
@@ -101,20 +94,6 @@ public class UiComponent {
         passwordFields.add(passwordField);
         addNode(passwordField);
         return passwordField;
-    }
-
-    public String getTextFieldText(int index) {
-        if (index >= 0 && index < textFields.size()) {
-            return textFields.get(index).getText();
-        }
-        return "";
-    }
-
-    public String getPasswordFieldText(int index) {
-        if (index >= 0 && index < passwordFields.size()) {
-            return passwordFields.get(index).getText();
-        }
-        return "";
     }
 
     public TextField getTextField(int index) {

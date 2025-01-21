@@ -4,14 +4,17 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Post implements Postable {
 
+    private int likes;
     private String content;
     private String author;
-    private int numberOfLikes;
-    private User parentUser;
+    private final User parentUser;
+    private Set<String> usersWhoLiked;
     private final LocalDateTime timestamp;
     private final List<Comment> comments;
 
@@ -22,6 +25,8 @@ public class Post implements Postable {
         this.comments = new ArrayList<>();
         this.timestamp = LocalDateTime.now();  //timestamp to the current time
         this.parentUser = user;
+        this.likes = 0;
+        this.usersWhoLiked = new HashSet<>();
     }
 
     @Override
@@ -52,10 +57,6 @@ public class Post implements Postable {
 
     void addComment(Comment comment) {
         comments.addFirst(comment);
-    }
-
-    int getNumberOfLikes(){
-        return numberOfLikes;
     }
 
     int getNumberOfComments(){
@@ -102,5 +103,19 @@ public class Post implements Postable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return timestamp.format(formatter);
     }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public boolean likePost(User user) {
+        if (usersWhoLiked.contains(user.getUsername())) {
+            return true;  // User has already liked the post
+        }
+        usersWhoLiked.add(user.getUsername());
+        likes++;
+        return false;
+    }
+
 
 }

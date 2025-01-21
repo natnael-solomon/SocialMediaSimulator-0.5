@@ -6,10 +6,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
-
 import static socialmedia.Main.userManager;
 
 public class FeedHomePage extends ScrollPane {
@@ -31,21 +27,13 @@ public class FeedHomePage extends ScrollPane {
         feed.getStyleClass().add("feed");
 
 
-        List<User> favoriteUsers = userManager.getCurrentUser().getFavoriteUsers();
-        List<Post> currentUserPosts = userManager.getCurrentUser().getPosts();
+
 
         CreatePostGUI createPostGUI = new CreatePostGUI(this);
         feed.getChildren().add(createPostGUI);
 
-        List<Post> allPosts = new LinkedList<>();
-        for (User user : favoriteUsers) {
-            allPosts.addAll(user.getPosts());
-        }
-
-        allPosts.addAll(currentUserPosts);
-        allPosts.sort(Comparator.comparing(Post::getTimestamp).reversed());
-
-        for (Post post : allPosts) {
+        // Includes only posts from favorite users by default (and current user's posts ofc).
+        for (Post post : userManager.getPostsFromFavorites()) {
             feed.getChildren().add(new PostHomePage(post, primaryStage));
         }
 

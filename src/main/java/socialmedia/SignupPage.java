@@ -89,6 +89,11 @@ public class SignupPage extends Application {
             User currentUser = new User(fullName, username, password);
             userManager.addUser(currentUser);
 
+            errorLabel.getStyleClass().remove("hidden");
+            errorLabel.getStyleClass().add("visible-successful");
+            errorLabel.setText("Account created successfully!");
+
+
 
         } catch (PasswordMismatchException | UsernameAlreadyExistsException | InvalidFullNameException |
                  InvalidPasswordException | InvalidUsernameException | EmptyFieldException e) {

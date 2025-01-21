@@ -23,20 +23,23 @@ public class FavoriteHomePage extends ScrollPane {
         title.getStyleClass().add("favorite-title");
         content.getChildren().add(title);
 
-        List<User> favoriteUsers = userManager.getCurrentUser().getFavoriteUsers();
+        List<String> favoriteUsersUsername = userManager.getCurrentUser().getFavoriteUsersUsername();
 
-        for (int i = 0; i < favoriteUsers.size(); i++) {
-            Button trendItem = new Button(favoriteUsers.get(i).getFullName());
+        for (String username : favoriteUsersUsername) {
+
+            Button trendItem = new Button(userManager.findUserByUsername(username).getFullName());
             trendItem.getStyleClass().add("favorite-user");
-            int finalI = i;
+
             trendItem.setOnMouseClicked(event -> {
-                ProfilePage profilePage = new ProfilePage(favoriteUsers.get(finalI), primaryStage);
+                ProfilePage profilePage = new ProfilePage(userManager.findUserByUsername(username), primaryStage);
                 primaryStage.setScene(profilePage.getScene());
             });
+
             content.getChildren().add(trendItem);
         }
 
-        if (favoriteUsers.isEmpty()) {
+
+        if (favoriteUsersUsername.isEmpty()) {
             Label noFavorites = new Label("You have no favorite users.");
             noFavorites.getStyleClass().add("favorite-user");
             content.getChildren().add(noFavorites);

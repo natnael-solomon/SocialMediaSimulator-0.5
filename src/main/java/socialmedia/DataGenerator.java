@@ -60,9 +60,9 @@ public class DataGenerator {
             String fullName = userDatum[0];
             String username = userDatum[1];
             String password = "password";
-            String bio = "This is a default bio";
+            String bio = "This is a default bio for " + fullName;
 
-            User user = new User(fullName, username, password, bio);
+            User user = new User(fullName, username, password, bio, true);
 
             generatePosts(user);
             users.add(user);

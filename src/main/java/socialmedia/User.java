@@ -11,9 +11,9 @@ public class User {
     private String fullName;
     private String username;
     private Image profilePicture;
+    private String profilePicturePath;
     private String bio;
     private String password;
-    private final List<User> favoriteUsers;
     private final List<String> favoriteUsersUsername;
     private final List<Post> posts;
 
@@ -22,26 +22,24 @@ public class User {
         this(fullName, username, password, null, null);
     }
 
-    public User(String fullName, String username, String password, Image profilePicture, String bio) {
+    public User(String fullName, String username, String password, String profilePicturePath, String bio) {
         this.fullName = fullName;
         this.username = username;
         this.password = hashPassword(password);
-        this.profilePicture = profilePicture;
+        this.profilePicturePath = profilePicturePath;
+        this.profilePicture = (profilePicturePath != null) ? new Image(profilePicturePath) : null;
         this.bio = bio;
-        this.favoriteUsers= new LinkedList<>();
         this.favoriteUsersUsername = new LinkedList<>();
         this.posts = new LinkedList<>();
     }
 
-    public User(String fullName, String username, String password, Image profilePicture) {
-        this(fullName, username, password, profilePicture, null);
+    public User(String fullName, String username, String password, String profilePicturePath) {
+        this(fullName, username, password, profilePicturePath, null);
     }
 
-    public User(String fullName, String username, String password, String bio) {
+    public User(String fullName, String username, String password, String bio, boolean ignoredIsProfilePictureNull) {
         this(fullName, username, password, null, bio);
     }
-
-
 
 
     public String getFullName() {
@@ -68,12 +66,24 @@ public class User {
         this.password = hashPassword(password);
     }
 
+    public String getProfilePicturePath() {
+        return profilePicturePath;
+    }
+
+    public void setProfilePicturePath(String profilePicturePath) {
+        this.profilePicturePath = profilePicturePath;
+    }
+
     public Image getProfilePicture() {
         return profilePicture;
     }
 
     public void setProfilePicture(Image profilePicture) {
         this.profilePicture = profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicturePath) {
+        this.profilePicture = new Image(profilePicturePath);
     }
 
     public String getBio() {
@@ -95,20 +105,8 @@ public class User {
     }
 
 
-    public Post getPost(int index) {
-        if (index >= 0 && index < posts.size()) {
-            return posts.get(index);
-        } else {
-            return null;  // Return null if the index is invalid
-        }
-    }
-
     public void removePost(Post post) {
         posts.remove(post);
-    }
-
-    public List<User> getFavoriteUsers() {
-        return new LinkedList<>(favoriteUsers);
     }
 
 
@@ -117,13 +115,12 @@ public class User {
     }
 
     public void addToFavoriteUsers(User user) {
-        this.favoriteUsers.addFirst(user);
-        this.favoriteUsersUsername.addFirst(user.username);
-        favoriteUsers.sort((o1, o2) -> o1.getFullName().compareToIgnoreCase(o2.getFullName()));
+        favoriteUsersUsername.addFirst(user.getUsername());
+        favoriteUsersUsername.sort(String::compareToIgnoreCase);
+
     }
 
     public void removeFromFavoriteUsers(User user) {
-        favoriteUsers.remove(user);
         favoriteUsersUsername.remove(user.getUsername());
     }
 

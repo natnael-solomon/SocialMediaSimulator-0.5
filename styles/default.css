@@ -266,7 +266,6 @@
     -fx-transition: all 0.3s ease-in-out;
 }
 
-/*              */
 
 .custom-dialog {
     -fx-font-size: 30px;
@@ -319,3 +318,13 @@
     -fx-transition: all 0.3s ease-in-out;
 }
 
+.visible-successful {
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-font-size: 12px;
+    -fx-padding: 4px;
+    -fx-border-color: #85ff76;
+    -fx-background-color: #eefcee;
+    -fx-border-width: 1px;
+    -fx-transition: all 0.3s ease-in-out;
+}

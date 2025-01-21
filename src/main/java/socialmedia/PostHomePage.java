@@ -6,9 +6,17 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import static socialmedia.Main.userManager;
+
 public class PostHomePage extends VBox {
 
+
+    private final Post post;
+    private final Stage primaryStage;
+
     public PostHomePage(Post post, Stage primaryStage) {
+        this.post = post;
+        this.primaryStage = primaryStage;
         this.setSpacing(10);
         this.getStyleClass().add("post");
 
@@ -44,20 +52,29 @@ public class PostHomePage extends VBox {
 
     private HBox createPostActions() {
         HBox postActions = new HBox(20);
+
+        Button likeButton = new Button("👍 "  + post.getLikes() + " Like" + (post.getLikes() > 1 ? "s" : ""));
+        likeButton.getStyleClass().add("post-action-button");
+
+        likeButton.setOnAction(event -> {
+            boolean liked = post.likePost(userManager.getCurrentUser());
+            if (!liked) {
+                likeButton.setText("👍 "  + post.getLikes() + " Like" + (post.getLikes() > 1 ? "s" : ""));
+            } else {
+                likeButton.setText("👍 Already liked - "  + post.getLikes() + " Like" + (post.getLikes() > 1 ? "s" : ""));
+            }
+        });
+
+        Button commentButton = new Button("💬 " + post.getNumberOfComments() + " Comment" + (post.getNumberOfComments() > 1 ? "s" : ""));
+        commentButton.getStyleClass().add("post-action-button");
+        commentButton.setOnAction(event -> new PostPage(post, primaryStage));
+
         postActions.getChildren().addAll(
-                createActionButton("❤ Like"),
-                createActionButton("💬 Comment"),
-                createActionButton("🔄 Share")
+                likeButton,commentButton
         );
         return postActions;
     }
 
-    private Button createActionButton(String text) {
-        Button button = new Button(text);
-        button.getStyleClass().add("post-action-button");
-        button.setOnAction(event -> System.out.println(text + " clicked!")); // Example action
-        return button;
-    }
 
     private void openPostInNewWindow(Post post, Stage primaryStage) {
         new PostPage(post, primaryStage);

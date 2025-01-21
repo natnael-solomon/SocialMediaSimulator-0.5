@@ -1,8 +1,7 @@
 package socialmedia;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class UserManager {
 
@@ -71,11 +70,89 @@ public class UserManager {
         return new ArrayList<>(users);
     }
 
-    public User getUser(int index) {
-        if (index >= 0 && index < users.size()) {
-            return users.get(index);
-        } else {
-            return null;
+    public List<Post> getAllUsersPosts() {
+        List<Post> allPosts = new LinkedList<>();
+
+        for (User user : users) {
+            // excludes the current user by default
+            if (user == currentUser) {
+                continue;
+            }
+
+            allPosts.addAll(user.getPosts());
         }
+
+        // Sorts posts by timestamp in descending order
+        allPosts.sort(Comparator.comparing(Post::getTimestamp).reversed());
+
+        return allPosts;
+    }
+
+    public List<Post> getPostsFromFavorites() {
+
+        if (currentUser == null) {
+            return new LinkedList<>();
+        }
+
+        List<String> favoriteUsersUsername = currentUser.getFavoriteUsersUsername();
+        List<Post> allPosts = new LinkedList<>();
+
+
+        for (String username : favoriteUsersUsername) {
+            User favoriteUser = findUserByUsername(username);
+            if (favoriteUser != null) {
+                allPosts.addAll(favoriteUser.getPosts());
+            }
+        }
+
+        // Adds current user's posts
+        allPosts.addAll(currentUser.getPosts());
+
+        // Sorts posts by timestamp in descending order
+        allPosts.sort(Comparator.comparing(Post::getTimestamp).reversed());
+
+        return allPosts;
+    }
+
+    public List<User> getUserSuggestions(int threshold) {
+        if (currentUser == null) {
+            return new ArrayList<>();
+        }
+
+        List<User> suggestedUsers = new ArrayList<>();
+
+
+        // Iterates over all users to find those who share favorite users with the current user
+        for (User user : users) {
+
+            if (user == currentUser) {
+                continue;
+            }
+
+            int commonFavoritesCount = getCommonFavoriteCount(user, currentUser);
+
+            // If the users share a sufficient number of favorite users, add them as a suggestion
+            if (commonFavoritesCount >= threshold) {
+                suggestedUsers.add(user);
+            }
+        }
+
+        return suggestedUsers;
+    }
+
+    public int getCommonFavoriteCount(User user1, User user2) {
+        List<String> favoritesOfUser1 = user1.getFavoriteUsersUsername();
+        List<String> favoritesOfUser2 = user2.getFavoriteUsersUsername();
+
+        int commonFavoriteCount = 0;
+
+        for (String favorite : favoritesOfUser1) {
+            if (favoritesOfUser2.contains(favorite)) {
+                commonFavoriteCount++;
+            }
+        }
+
+        return commonFavoriteCount;
     }
 }
+
