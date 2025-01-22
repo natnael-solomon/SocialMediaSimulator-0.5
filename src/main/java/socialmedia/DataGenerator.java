@@ -73,7 +73,7 @@ public class DataGenerator {
         for (User user : users) {
                 for (User potentialFavorite : users) {
 
-                    if (!user.getUsername().equals(potentialFavorite.getUsername()) && !potentialFavorite.getUsername().equals("chombe")) {
+                    if (!user.getUsername().equals(potentialFavorite.getUsername())) {
                         user.addToFavoriteUsers(potentialFavorite);
                     }
                 }

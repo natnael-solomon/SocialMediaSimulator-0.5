@@ -175,17 +175,88 @@
     -fx-transition: 0.3s;
 }
 
+.edit-profile-button-small {
+    -fx-font-size: 11px;
+    -fx-padding: 4px;
+    -fx-background-color: #fcfdfd;
+    -fx-border-color: #11557c;
+    -fx-border-width: 1;
+    -fx-border-radius: 7;
+    -fx-background-radius: 7;
+    -fx-text-fill: #0e5072;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 5, 0, 0, 1);
+    -fx-transition: 0.3s;
+}
+
 .edit-profile-button:hover {
     -fx-background-color: #D6EDFD;
     -fx-text-fill: #1A91DA;
 }
 
+.edit-profile-button-small:hover {
+    -fx-background-color: #f4fafa;
+    -fx-text-fill: #136ca1;
+}
+
 .edit-profile-field {
-    -fx-max-width: 400px;
-    -fx-font-size: 15px;
-    -fx-padding: 10px;
+    -fx-min-width: 400px;
+    -fx-max-height: 30px;
+    -fx-font-size: 13px;
+    -fx-padding: 8px;
     -fx-border-color: #e1e5e9;
     -fx-border-width: 1px;
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
+}
+
+.edit-profile-field-small {
+    -fx-max-width: 400px;
+    -fx-max-height: 20px;
+    -fx-font-size: 12px;
+    -fx-padding: 5px;
+    -fx-border-color: #e1e5e9;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-alignment: center;
+}
+
+.hidden {
+    -fx-opacity: 0;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-font-size: 12px;
+    -fx-padding: 4px;
+    -fx-border-color: #dc5a5a;
+    -fx-background-color: #fff4f4;
+    -fx-border-width: 1px;
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+.visible {
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-font-size: 12px;
+    -fx-padding: 4px;
+    -fx-border-color: #dc5a5a;
+    -fx-background-color: #fff4f4;
+    -fx-border-width: 1px;
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+.visible-successful {
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-font-size: 12px;
+    -fx-padding: 4px;
+    -fx-border-color: #189609;
+    -fx-background-color: #eefcee;
+    -fx-border-width: 1px;
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+.invalid-field {
+    -fx-border-color: #f59393;
+    -fx-transition: all 0.3s ease-in-out;
 }

@@ -56,6 +56,11 @@ public class PostHomePage extends VBox {
         Button likeButton = new Button("👍 "  + post.getLikes() + " Like" + (post.getLikes() > 1 ? "s" : ""));
         likeButton.getStyleClass().add("post-action-button");
 
+        if(post.getLikes()==0){
+            likeButton.setText("👍 Like");
+
+        }
+
         likeButton.setOnAction(event -> {
             boolean liked = post.likePost(userManager.getCurrentUser());
             if (!liked) {
@@ -66,6 +71,12 @@ public class PostHomePage extends VBox {
         });
 
         Button commentButton = new Button("💬 " + post.getNumberOfComments() + " Comment" + (post.getNumberOfComments() > 1 ? "s" : ""));
+
+        if(post.getNumberOfComments()==0){
+            commentButton.setText("💬 Comment");
+
+        }
+
         commentButton.getStyleClass().add("post-action-button");
         commentButton.setOnAction(event -> new PostPage(post, primaryStage));
 

@@ -86,7 +86,8 @@ public class HeaderHomePage extends HBox {
 
     private void processSearchQuery(String query) {
         List<User> filteredUsers = userManager.getUsers().stream()
-                .filter(user -> user.getUsername().toLowerCase().contains(query.toLowerCase()))
+                .filter(user -> user.getUsername().toLowerCase().contains(query.toLowerCase())
+                        || user.getFullName().toLowerCase().contains(query.toLowerCase()))
                 .collect(Collectors.toList());
 
         updateDropdownResults(filteredUsers);

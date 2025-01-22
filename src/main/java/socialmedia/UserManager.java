@@ -74,10 +74,6 @@ public class UserManager {
         List<Post> allPosts = new LinkedList<>();
 
         for (User user : users) {
-            // excludes the current user by default
-            if (user == currentUser) {
-                continue;
-            }
 
             allPosts.addAll(user.getPosts());
         }

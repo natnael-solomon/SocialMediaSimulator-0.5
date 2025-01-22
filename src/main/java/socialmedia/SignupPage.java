@@ -94,30 +94,11 @@ public class SignupPage extends Application {
             errorLabel.setText("Account created successfully!");
 
 
-
         } catch (PasswordMismatchException | UsernameAlreadyExistsException | InvalidFullNameException |
                  InvalidPasswordException | InvalidUsernameException | EmptyFieldException e) {
-            showError(e.getMessage());
+            ui.showFeedback(errorLabel, e.getMessage());
             ui.invalidInput("general");
         }
     }
 
-    private final PauseTransition pause = new PauseTransition(Duration.seconds(3));
-
-    private void showError(String message) {
-        if (!errorLabel.getText().equals(message)) {
-            errorLabel.setText(message);
-        }
-
-        errorLabel.getStyleClass().remove( "hidden");
-        errorLabel.getStyleClass().add("visible");
-
-        pause.setOnFinished(event -> hideError());
-        pause.play();
-    }
-
-    private void hideError() {
-        errorLabel.getStyleClass().remove("visible");
-        errorLabel.getStyleClass().add("hidden");
-    }
 }

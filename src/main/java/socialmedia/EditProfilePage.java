@@ -1,11 +1,14 @@
 package socialmedia;
 
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -15,14 +18,19 @@ import javafx.scene.shape.Circle;
 import java.io.File;
 
 public class EditProfilePage {
+
     private final User user;
     private StackPane rootLayout;
     private ImageView profilePicture;
     private TextField nameField;
     private TextField usernameField;
     private TextField bioField;
+    private PasswordField oldPasswordField;
+    private PasswordField newPasswordField;
+    private PasswordField confirmPasswordField;
     private final Stage primaryStage;
     private final UiComponent uiComponent;
+    private Label errorLabel;
 
     public EditProfilePage(User user, Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -35,31 +43,15 @@ public class EditProfilePage {
         rootLayout = uiComponent.createStackPane("stack-pane");
         VBox content = uiComponent.createVBox("edit-profile-page", 10);
 
-        Label titleLabel = uiComponent.createLabel("Edit Profile", "edit-profile-title", 0.0);
+        setupProfilePicture(content);
+        setupPersonalInfo(content);
+        setupPasswordChange(content);
 
-        profilePicture = new ImageView(user.getProfilePicture() != null ? user.getProfilePicture() : new Image("file:icons/profile.jpg", 200, 200, true, true));
-        profilePicture.setFitWidth(200);
-        profilePicture.setFitHeight(200);
-        profilePicture.setClip(new Circle(100, 100, 100));
-        profilePicture.getStyleClass().add("edit-profile-picture");
-
-        Button changePictureButton = uiComponent.createButton("Change Profile Picture", "edit-profile-button", this::changeProfilePicture);
-
-        nameField = uiComponent.createTextField("Full Name", "edit-profile-field", 0);
-        nameField.setText(user.getFullName());
-
-        usernameField = uiComponent.createTextField("Username", "edit-profile-field", 0);
-        usernameField.setText(user.getUsername());
-
-        bioField = uiComponent.createTextField("Bio", "edit-profile-field", 0);
-        bioField.setText(user.getBio());
+        errorLabel = uiComponent.createLabel("","hidden",0);
+        content.getChildren().add(errorLabel);
 
         Button saveButton = uiComponent.createButton("Save Changes", "edit-profile-button", this::saveChanges);
-
-        content.getChildren().addAll(titleLabel, profilePicture, changePictureButton,
-                uiComponent.createLabel("Name:", null, 0.0), nameField,
-                uiComponent.createLabel("Username:", null, 0.0), usernameField,
-                uiComponent.createLabel("Bio:", null, 0.0), bioField, saveButton);
+        content.getChildren().add(saveButton);
 
         assert rootLayout != null;
         rootLayout.getChildren().add(content);
@@ -71,6 +63,79 @@ public class EditProfilePage {
         return scene;
     }
 
+    private void setupProfilePicture(VBox content) {
+        profilePicture = setUpProfilePicture();
+        Button changePictureButton = uiComponent.createButton("Change Profile Picture", "edit-profile-button-small", this::changeProfilePicture);
+        content.getChildren().addAll(profilePicture, changePictureButton);
+    }
+
+    private ImageView setUpProfilePicture() {
+        String profileImagePath = user.getProfilePicturePath();
+        Image profileImage = profileImagePath != null ? new Image(profileImagePath) : new Image("file:icons/profile.jpg", 200, 200, true, true);
+
+        ImageView imageView = new ImageView(profileImage);
+        imageView.setFitWidth(200);
+        imageView.setFitHeight(200);
+        imageView.setClip(new Circle(100, 100, 100));
+        imageView.getStyleClass().add("edit-profile-picture");
+        return imageView;
+    }
+
+    private void setupPersonalInfo(VBox content) {
+        double labelWidth = 100;
+
+        HBox nameBox = createLabeledTextField("Full Name:", labelWidth, user.getFullName());
+        nameField = (TextField) nameBox.getChildren().get(1);
+
+        HBox usernameBox = createLabeledTextField("Username:", labelWidth, user.getUsername());
+        usernameField = (TextField) usernameBox.getChildren().get(1);
+
+        HBox bioBox = createLabeledTextField("Bio:", labelWidth, user.getBio());
+        bioField = (TextField) bioBox.getChildren().get(1);
+
+        content.getChildren().addAll(nameBox, usernameBox, bioBox);
+        content.setAlignment(Pos.CENTER);
+    }
+
+    private HBox createLabeledTextField(String labelText, double labelWidth, String textFieldValue) {
+        HBox hbox = uiComponent.createHBox("edit-profile-row", 10);
+        Label label = uiComponent.createLabel(labelText, null, 0.0);
+        label.setPrefWidth(labelWidth);
+        TextField textField = uiComponent.createTextField(labelText, "edit-profile-field", 0);
+        textField.setText(textFieldValue);
+        hbox.getChildren().addAll(label, textField);
+        hbox.setAlignment(Pos.CENTER);
+        return hbox;
+    }
+
+    private void setupPasswordChange(VBox content) {
+        double labelWidth = 100;
+
+        HBox oldPasswordBox = createLabeledPasswordField("Old Password:", labelWidth);
+        oldPasswordField = (PasswordField) oldPasswordBox.getChildren().get(1);
+
+        HBox newPasswordBox = createLabeledPasswordField("New Password:", labelWidth);
+        newPasswordField = (PasswordField) newPasswordBox.getChildren().get(1);
+
+        HBox confirmPasswordBox = createLabeledPasswordField("Confirm Password:", labelWidth);
+        confirmPasswordField = (PasswordField) confirmPasswordBox.getChildren().get(1);
+
+        Button changePasswordButton = uiComponent.createButton("Change Password", "edit-profile-button-small", this::changePassword);
+
+        content.getChildren().addAll(oldPasswordBox, newPasswordBox, confirmPasswordBox, changePasswordButton);
+        content.setAlignment(Pos.CENTER);
+    }
+
+    private HBox createLabeledPasswordField(String labelText, double labelWidth) {
+        HBox hbox = uiComponent.createHBox("edit-profile-row", 10);
+        Label label = uiComponent.createLabel(labelText, null, 0.0);
+        label.setPrefWidth(labelWidth);
+        PasswordField passwordField = uiComponent.createPasswordField(labelText, "edit-profile-field", 0);
+        hbox.getChildren().addAll(label, passwordField);
+        hbox.setAlignment(Pos.CENTER);
+        return hbox;
+    }
+
     private void changeProfilePicture() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
@@ -78,9 +143,40 @@ public class EditProfilePage {
 
         if (selectedFile != null) {
             Image newProfilePicture = new Image(selectedFile.toURI().toString(), 400, 400, true, true);
-
             profilePicture.setImage(newProfilePicture);
-            user.setProfilePicture(newProfilePicture);
+            user.setProfilePicturePath(selectedFile.toURI().toString());
+        }
+    }
+
+    private void changePassword() {
+        String oldPassword = oldPasswordField.getText().trim();
+        String newPassword = newPasswordField.getText().trim();
+        String confirmPassword = confirmPasswordField.getText().trim();
+
+        try {
+            // Validates non-empty fields
+            Validator.validateNonEmptyFields(oldPassword, newPassword, confirmPassword);
+
+            // Validates old password correctness
+            if (!user.validatePassword(oldPassword)) {
+                throw new ValidationExceptions.InvalidPasswordException("Current password is incorrect.");
+            }
+
+            // Validates new password and confirm password match
+            Validator.validatePassword(newPassword);
+            Validator.validatePasswordMatch(newPassword, confirmPassword);
+
+            // Updates the user's password
+            user.setPassword(newPassword);
+
+            errorLabel.getStyleClass().remove("hidden");
+            errorLabel.getStyleClass().add("visible-successful");
+            errorLabel.setText("Password changed successfully!");
+
+
+        } catch (ValidationExceptions.EmptyFieldException | ValidationExceptions.InvalidPasswordException e) {
+            uiComponent.invalidInput("password");
+            uiComponent.showFeedback(errorLabel, e.getMessage());
         }
     }
 
@@ -88,9 +184,7 @@ public class EditProfilePage {
         user.setFullName(nameField.getText());
         user.setUsername(usernameField.getText());
         user.setBio(bioField.getText());
-        //todo: save changes to file or...
 
-        // Navigates back to ProfilePage
         Stage stage = primaryStage;
         ProfilePage profilePage = new ProfilePage(user, stage);
         stage.setScene(profilePage.getScene());

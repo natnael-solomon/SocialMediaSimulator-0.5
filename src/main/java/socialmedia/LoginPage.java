@@ -55,7 +55,7 @@ public class LoginPage extends Application {
                     throw new InvalidCredentialsException("Incorrect username or password.");
                 }
             } catch (EmptyFieldException | InvalidCredentialsException | InvalidUsernameException | InvalidPasswordException e) {
-                showError(e.getMessage());
+                ui.showFeedback(errorLabel, e.getMessage());
                 ui.invalidInput("general");
             }
         });
@@ -88,30 +88,6 @@ public class LoginPage extends Application {
         primaryStage.setTitle("Login Page");
         primaryStage.show();
     }
-
-    private final PauseTransition pause = new PauseTransition(Duration.seconds(2));
-
-    private void showError(String message) {
-        if (!errorLabel.getText().equals(message)) {
-            errorLabel.setText(message);
-        }
-
-        if (!errorLabel.getStyleClass().contains("visible")) {
-            errorLabel.getStyleClass().remove("hidden");
-            errorLabel.getStyleClass().add("visible");
-        }
-
-        pause.setOnFinished(event -> hideError());
-        pause.play();
-    }
-
-    private void hideError() {
-        if (!errorLabel.getStyleClass().contains("hidden")) {
-            errorLabel.getStyleClass().remove("visible");
-            errorLabel.getStyleClass().add("hidden");
-        }
-    }
-
 }
 
 

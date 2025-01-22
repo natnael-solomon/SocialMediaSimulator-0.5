@@ -162,7 +162,7 @@ public class UiComponent {
         alert.setTitle(title);
         alert.setContentText(message);
 
-        alert.getDialogPane().getStylesheets().add("file:styles/default.css");
+        alert.getDialogPane().getStylesheets().add("file:styles/default2.css");
         alert.getDialogPane().getStyleClass().add("custom-dialog");
 
         if (title != null && !title.isEmpty()) {
@@ -230,6 +230,28 @@ public class UiComponent {
         }
 
     }
+
+    private final PauseTransition pause = new PauseTransition(Duration.seconds(3));
+
+    public void showFeedback(Label targetLabel, String message) {
+
+
+        if (!targetLabel.getText().equals(message)) {
+            targetLabel.setText(message);
+        }
+
+        targetLabel.getStyleClass().remove("hidden");
+        targetLabel.getStyleClass().add("visible");
+
+        pause.setOnFinished(event -> hideFeedback(targetLabel));
+        pause.play();
+    }
+
+    private void hideFeedback(Label targetLabel) {
+        targetLabel.getStyleClass().remove("visible");
+        targetLabel.getStyleClass().add("hidden");
+    }
+
 
     // Layout Factories
     public VBox createVBox(String cssClass, double spacing) {

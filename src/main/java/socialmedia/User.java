@@ -1,6 +1,5 @@
 package socialmedia;
 
-import javafx.scene.image.Image;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -10,7 +9,6 @@ public class User {
 
     private String fullName;
     private String username;
-    private Image profilePicture;
     private String profilePicturePath;
     private String bio;
     private String password;
@@ -18,19 +16,18 @@ public class User {
     private final List<Post> posts;
 
 
-    public User(String fullName, String username, String password) {
-        this(fullName, username, password, null, null);
-    }
-
     public User(String fullName, String username, String password, String profilePicturePath, String bio) {
         this.fullName = fullName;
         this.username = username;
         this.password = hashPassword(password);
         this.profilePicturePath = profilePicturePath;
-        this.profilePicture = (profilePicturePath != null) ? new Image(profilePicturePath) : null;
         this.bio = bio;
         this.favoriteUsersUsername = new LinkedList<>();
         this.posts = new LinkedList<>();
+    }
+
+    public User(String fullName, String username, String password) {
+        this(fullName, username, password, null, null);
     }
 
     public User(String fullName, String username, String password, String profilePicturePath) {
@@ -72,18 +69,6 @@ public class User {
 
     public void setProfilePicturePath(String profilePicturePath) {
         this.profilePicturePath = profilePicturePath;
-    }
-
-    public Image getProfilePicture() {
-        return profilePicture;
-    }
-
-    public void setProfilePicture(Image profilePicture) {
-        this.profilePicture = profilePicture;
-    }
-
-    public void setProfilePicture(String profilePicturePath) {
-        this.profilePicture = new Image(profilePicturePath);
     }
 
     public String getBio() {
