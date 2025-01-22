@@ -231,11 +231,12 @@
 
 /* Post Content */
 .post-content {
-    -fx-font-size: 17px;
+    -fx-font-size: 15px;
     -fx-padding: 1px 1px;
     -fx-text-fill: linear-gradient(to left, #172223, #1c2646);
     -fx-line-spacing: 1.2;
     -fx-background-color: transparent;
+    -fx-wrap-text: true;
 }
 
 /* Close Button */
@@ -346,7 +347,7 @@
 
 /* Post Content */
 .post-window-details-content {
-    -fx-font-size: 23px;
+    -fx-font-size: 20px;
     -fx-font-family: Arial, sans-serif;
     -fx-text-fill: #14161a;
     -fx-line-spacing: 1.2;

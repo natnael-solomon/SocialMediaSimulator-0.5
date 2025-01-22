@@ -11,11 +11,9 @@ public class PostPage {
 
     private final VBox floatingCommentSection = new VBox();
     private final Post post;
-    private final Stage primaryStage;
 
     public PostPage(Post post, Stage primaryStage) {
         this.post = post;
-        this.primaryStage = primaryStage;
 
         UiComponent ui = new UiComponent(primaryStage);
         ui.configureStage("Post Details - Post ");
@@ -31,6 +29,7 @@ public class PostPage {
         VBox postCard = ui.createVBox("post-window-card", 20);
         HBox userInfo = createPostDetailsHeader(ui, post.getParentUser().getFullName(), "@" + post.getAuthor());
         Label postContent = ui.createLabel(post.getContent(), "post-window-details-content", 0);
+        postContent.setWrapText(true);
 
         HBox commentSection = ui.createHBox("post-window-comment-box", 10);
         TextField commentArea = ui.createTextField("Add a comment...", "post-window-comment-area", 300);
@@ -59,12 +58,6 @@ public class PostPage {
         Label userIcon = ui.createLabel("👤", "post-window-user-icon", 0);
         Label fullNameLabel = ui.createLabel(fullName, "post-window-full-name", 0);
         Label userName = ui.createLabel(username, "post-window-user-name", 0);
-        userName.setOnMouseClicked(event -> {
-            ProfilePage profilePage = new ProfilePage(post.getParentUser(), primaryStage);
-            Stage stage = new Stage();
-            stage.setScene(profilePage.getScene());
-            stage.show();
-        });
 
         VBox userDetails = ui.createVBox("user-details", 5);
         userDetails.getChildren().addAll(fullNameLabel, userName);

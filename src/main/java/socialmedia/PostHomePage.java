@@ -23,7 +23,6 @@ public class PostHomePage extends VBox {
         HBox postHeader = createPostHeader(post);
         Label postContent = new Label(post.getContent()); // Set the content
         postContent.getStyleClass().add("post-content");
-        postContent.setWrapText(true);
 
         HBox postActions = createPostActions();
 
