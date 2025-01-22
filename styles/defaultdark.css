@@ -31,6 +31,22 @@
     -fx-padding: 5px;
 }
 
+.container {
+    -fx-alignment: top-center;
+    -fx-padding: 20px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-spacing: 15px;
+    -fx-max-width: 600px;
+    -fx-max-height: 500px;
+    -fx-text-fill: linear-gradient(to left, #3c6e72, #0046b7);
+    -fx-border-color: #3b3b3b;
+    -fx-border-width: 1;
+    -fx-background-color: #1E1E1E;
+    -fx-transition: 0.3s;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 100, 0.1, 0, 0);
+}
+
 .field {
     -fx-padding: 10px;
     -fx-font-size: 14px;

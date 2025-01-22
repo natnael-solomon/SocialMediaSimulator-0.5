@@ -1,7 +1,5 @@
 package socialmedia;
 
-import javafx.animation.PauseTransition;
-import javafx.util.Duration;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

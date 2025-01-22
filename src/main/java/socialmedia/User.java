@@ -1,8 +1,10 @@
 package socialmedia;
 
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 
 public class User {
@@ -12,6 +14,7 @@ public class User {
     private String profilePicturePath;
     private String bio;
     private String password;
+    private final Set<Integer> likedPostIds;
     private final List<String> favoriteUsersUsername;
     private final List<Post> posts;
 
@@ -24,6 +27,7 @@ public class User {
         this.bio = bio;
         this.favoriteUsersUsername = new LinkedList<>();
         this.posts = new LinkedList<>();
+        this.likedPostIds = new HashSet<>();
     }
 
     public User(String fullName, String username, String password) {
@@ -94,6 +98,20 @@ public class User {
         posts.remove(post);
     }
 
+    public Set<Integer> getLikedPostIds() {
+        return new HashSet<>(likedPostIds);
+    }
+
+    // adds the post ID to likedPostIds when a user likes a post
+    public void addLikedPostId(int postId) {
+        likedPostIds.add(postId);
+    }
+
+
+    public boolean likePost(Post post) {
+        return post.likePost(this);
+    }
+
 
     public List<String> getFavoriteUsersUsername(){
         return new LinkedList<>(favoriteUsersUsername);
@@ -101,9 +119,8 @@ public class User {
 
     public void addToFavoriteUsers(User user) {
         favoriteUsersUsername.addFirst(user.getUsername());
-        favoriteUsersUsername.sort(String::compareToIgnoreCase);
-
     }
+
 
     public void removeFromFavoriteUsers(User user) {
         favoriteUsersUsername.remove(user.getUsername());

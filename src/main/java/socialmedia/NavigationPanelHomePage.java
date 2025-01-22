@@ -13,11 +13,11 @@ public class NavigationPanelHomePage extends VBox {
         this.setSpacing(15);
         this.getStyleClass().add("nav-panel");
 
-        Button exploreButton = uiComponent.createButton("Explore", "nav-item", () -> {
 
+        Button aboutButton = uiComponent.createButton("About", "nav-item", () -> {
+            AboutPage aboutPage = new AboutPage();
+            aboutPage.start(primaryStage);
         });
-
-        Button SettingsButton = uiComponent.createButton("Settings", "nav-item", () -> {});
 
         Button LogOutButton = uiComponent.createButton("Log Out", "nav-item", () -> {
             userManager.setCurrentUser(null);
@@ -30,6 +30,6 @@ public class NavigationPanelHomePage extends VBox {
             primaryStage.setScene(profilePage.getScene());
         });
 
-        this.getChildren().addAll(exploreButton, profileButton, SettingsButton, LogOutButton);
+        this.getChildren().addAll(profileButton, aboutButton, LogOutButton);
     }
 }

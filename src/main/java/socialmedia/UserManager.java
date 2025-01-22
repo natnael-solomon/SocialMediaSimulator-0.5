@@ -109,46 +109,5 @@ public class UserManager {
 
         return allPosts;
     }
-
-    public List<User> getUserSuggestions(int threshold) {
-        if (currentUser == null) {
-            return new ArrayList<>();
-        }
-
-        List<User> suggestedUsers = new ArrayList<>();
-
-
-        // Iterates over all users to find those who share favorite users with the current user
-        for (User user : users) {
-
-            if (user == currentUser) {
-                continue;
-            }
-
-            int commonFavoritesCount = getCommonFavoriteCount(user, currentUser);
-
-            // If the users share a sufficient number of favorite users, add them as a suggestion
-            if (commonFavoritesCount >= threshold) {
-                suggestedUsers.add(user);
-            }
-        }
-
-        return suggestedUsers;
-    }
-
-    public int getCommonFavoriteCount(User user1, User user2) {
-        List<String> favoritesOfUser1 = user1.getFavoriteUsersUsername();
-        List<String> favoritesOfUser2 = user2.getFavoriteUsersUsername();
-
-        int commonFavoriteCount = 0;
-
-        for (String favorite : favoritesOfUser1) {
-            if (favoritesOfUser2.contains(favorite)) {
-                commonFavoriteCount++;
-            }
-        }
-
-        return commonFavoriteCount;
-    }
 }
 

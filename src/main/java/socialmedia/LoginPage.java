@@ -1,7 +1,5 @@
 package socialmedia;
 
-import javafx.animation.PauseTransition;
-import javafx.util.Duration;
 import socialmedia.ValidationExceptions.*;
 
 import javafx.application.Application;
@@ -69,7 +67,7 @@ public class LoginPage extends Application {
         });
 
 
-        Label footerLabel = ui.createLabel("2025 G.C", "footer-login", 1);
+        Label footerLabel = ui.createLabel("2025 G.C", "footer-login", 0.4);
 
         // Adds each component to the layout
         layout.getChildren().addAll(appIcon, titleLabel, usernameField, passwordField, loginButton, errorLabel, spacingLabel, signUpButton, footerLabel);

@@ -10,23 +10,30 @@ import java.util.Set;
 
 public class Post implements Postable {
 
+    private static int counter = 1000;
+    private final int postId;        // Unique ID for each post
     private int likes;
     private String content;
     private String author;
     private final User parentUser;
-    private Set<String> usersWhoLiked;
+    private final Set<String> usersWhoLiked;
     private final LocalDateTime timestamp;
     private final List<Comment> comments;
 
-    // Constructor
+
     public Post(String content, User user) {
+        this.postId = counter++;
         this.content = content;
         this.author = user.getUsername();
         this.comments = new ArrayList<>();
-        this.timestamp = LocalDateTime.now();  //timestamp to the current time
+        this.timestamp = LocalDateTime.now();  // Timestamp to the current time
         this.parentUser = user;
         this.likes = 0;
         this.usersWhoLiked = new HashSet<>();
+    }
+
+    public int getPostId() {
+        return postId;
     }
 
     @Override
@@ -59,14 +66,13 @@ public class Post implements Postable {
         comments.addFirst(comment);
     }
 
-    int getNumberOfComments(){
+    int getNumberOfComments() {
         return comments.size();
     }
 
-    User getParentUser(){
+    User getParentUser() {
         return parentUser;
     }
-
 
     @Override
     public String getContent() {
@@ -114,8 +120,7 @@ public class Post implements Postable {
         }
         usersWhoLiked.add(user.getUsername());
         likes++;
+        user.addLikedPostId(postId);
         return false;
     }
-
-
 }
