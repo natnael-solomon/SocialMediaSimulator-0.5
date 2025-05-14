@@ -1,24 +1,4 @@
 # OOP Project
-
-### Step 1: Download and Install JavaFX SDK
-
-1. **Download the JavaFX SDK** from the official [Gluon website](https://gluonhq.com/products/javafx/).
-2. **Extract the SDK** to a folder on your system, e.g., `C:\Java\javafx-sdk-22.0.1`.
-
----
-
-### Step 2: Set Environment Variables
-
-1. Press `Win + S`, type "Environment Variables," and select **Edit the system environment variables**.
-2. In the **System Properties** dialog, click the **Environment Variables** button.
-3. In the **System variables** section:
-    - Locate and select the `Path` variable, then click **Edit**.
-    - Click **New** and add the path to the `bin` folder of the JavaFX SDK, e.g.,
-      ```
-      C:\Java\javafx-sdk-22.0.1\bin
-      ```
-4. Click **OK** to save your changes.
-
 ---
 
 ### Step 3: Run JavaFX in Visual Studio Code
